@@ -6,6 +6,7 @@ import accountlogo from "../assets/Profile.png"
 import dashboardlogo from "../assets/Chart.png"
 import profilelog from "../assets/Document.png"
 import wallet from "../assets/Wallet.png"
+import ManagePromotion from "../ManagePromotion/ManagePromotion";
 
 const Sidebar = () => {
   const onDashboardContainerClick = useCallback(() => {
@@ -25,6 +26,7 @@ const Sidebar = () => {
   }, []);
   const onManageJewelyContainerClick = useCallback(() => {
     // Please sync "Manage Promotion" to the project
+    <ManagePromotion />
   }, []);
   const onPaymentTextClick = useCallback(() => {
     // Please sync "INVOICE" to the project
@@ -63,7 +65,7 @@ const Sidebar = () => {
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px]"
                 alt=""
-                src="/iconlyboldchart@2x.png"
+                src="src/assets/iconlyboldchart@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
                 <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[72px]">

@@ -3,6 +3,72 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        "colors-white-100": "#fff",
+        "primary-primary-50": "#f0ebff",
+        "primary-primary-500": "#7341fb",
+        "neutral-neutral-800": "#363c45",
+        "neutral-neutral-500": "#737982",
+        "neutral-neutral-25": "#fbfcfe",
+        "neutral-neutral-100": "#eff2f5",
+        "neutral-neutral-50": "#f5f7fa",
+        "neutral-neutral-200": "#e2e5e9",
+        whitesmoke: "#eee",
+        "primary-primary-400": "#895ffc",
+        "colors-neutral-200": "#e8eaed",
+        "colors-neutral-25": "#fbfcfd",
+        gainsboro: "#e0e3e3",
+        lightgray: "#cfd1d4",
+        white: "#fff",
+        whitesmoke: {
+          100: "#f5f5f5",
+          200: "#eee",
+        },
+        darkslategray: {
+          100: "#404b52",
+          200: "#1f384c",
+          300: "#273240",
+          400: "#292d32",
+        },
+        black: "#000",
+        blueviolet: "#5932ea",
+        silver: "#b5b7c0",
+        firebrick: {
+          100: "#d12525",
+          200: "rgba(209, 38, 38, 0.38)",
+        },
+        mediumaquamarine: "rgba(22, 192, 152, 0.38)",
+        mediumseagreen: "#00b087",
+        seagreen: "#008767",
+        ghostwhite: {
+          100: "#f9fbff",
+          200: "#f1f2f7",
+        },
+        cornflowerblue: "rgba(112, 127, 221, 0.48)",
+        gray: "rgba(8, 36, 49, 0.5)",
+        darkslateblue: "#5a67ba",
+        white: "#fff",
+        gray: {
+          100: "#18020c",
+          200: "rgba(255, 255, 255, 0.4)",
+          300: "rgba(24, 2, 12, 0.4)",
+          400: "rgba(0, 0, 0, 0.05)",
+          500: "rgba(24, 2, 12, 0.3)",
+          600: "rgba(24, 2, 12, 0.05)",
+        },
+        dimgray: {
+          100: "#4a3640",
+          200: "rgba(99, 75, 102, 0.05)",
+        },
+        darkslategray: "#1f384c",
+        blanchedalmond: "#ffe6cc",
+        lightslategray: {
+          100: "#9590a8",
+          200: "rgba(149, 144, 168, 0.1)",
+        },
+        dimgray: "#70594c",
+        whitesmoke: "#faf5f2",
+        darkslategray: "#2d2d2d",
+        lightgray: "#dccbc2",
         white: "#fff",
         whitesmoke: {
           "100": "#f5f5f5",
@@ -35,15 +101,47 @@ module.exports = {
       spacing: {},
       fontFamily: {
         poppins: "Poppins",
+        "d8-semibold": "Inter",
+        "open-sans": "'Open Sans'",
+        lato: "Lato",
+        cormorant: "Cormorant",
       },
       borderRadius: {
         "lg-8": "18.8px",
         "10xs-5": "2.5px",
         "6xs-3": "6.3px",
         "8xs": "5px",
+        "border-radius-br4": "4px",
+        "10xs": "3px",
+        "lg-8": "18.8px",
+        "10xs-5": "2.5px",
+        "6xs-3": "6.3px",
+        "8xs": "5px",
       },
+      
     },
     fontSize: {
+      "5xs-5": "7.5px",
+      "4xs-8": "8.8px",
+      "sm-8": "13.8px",
+      xs: "12px",
+      "2xs": "11px",
+      base: "16px",
+      "5xl": "24px",
+      lgi: "19px",
+      xs: "12px",
+      sm: "14px",
+      lg: "18px",
+      xl: "20px",
+      "13xl": "32px",
+      sm: "14px",
+      xs: "12px",
+      base: "16px",
+      xl: "20px",
+      base: "16px",
+      lg: "18px",
+      "5xl": "24px",
+      lgi: "19px",
       "5xs-5": "7.5px",
       "4xs-8": "8.8px",
       "sm-8": "13.8px",
@@ -52,6 +150,45 @@ module.exports = {
       inherit: "inherit",
     },
     screens: {
+      mq1325: {
+        raw: "screen and (max-width: 1325px)",
+      },
+      mq1125: {
+        raw: "screen and (max-width: 1125px)",
+      },
+      mq800: {
+        raw: "screen and (max-width: 800px)",
+      },
+      mq450: {
+        raw: "screen and (max-width: 450px)",
+      },
+      mq1000: {
+        raw: "screen and (max-width: 1000px)",
+      },
+      mq975: {
+        raw: "screen and (max-width: 975px)",
+      },
+      mq725: {
+        raw: "screen and (max-width: 725px)",
+      },
+      mq1125: {
+        raw: "screen and (max-width: 1125px)",
+      },
+      mq1050: {
+        raw: "screen and (max-width: 1050px)",
+      },
+      mq750: {
+        raw: "screen and (max-width: 750px)",
+      },
+      mq450: {
+        raw: "screen and (max-width: 450px)",
+      },
+      mq1000: {
+        raw: "screen and (max-width: 1000px)",
+      },
+      mq725: {
+        raw: "screen and (max-width: 725px)",
+      },
       mq1325: {
         raw: "screen and (max-width: 1325px)",
       },
