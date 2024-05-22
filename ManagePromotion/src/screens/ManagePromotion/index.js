@@ -1,1 +1,0 @@
-export { ManagePromotion } from "./ManagePromotion";
