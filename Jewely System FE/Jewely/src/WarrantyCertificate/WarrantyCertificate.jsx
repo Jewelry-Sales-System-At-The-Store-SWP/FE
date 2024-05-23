@@ -1,3 +1,4 @@
+import "./WarrantyCertificate.css";
 const WarrantyCertificate = () => {
     return (
       <div className="w-full relative bg-dimgray overflow-hidden flex flex-row items-start justify-start p-[26px] box-border leading-[normal] tracking-[normal]">
