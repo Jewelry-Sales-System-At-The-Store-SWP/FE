@@ -4,6 +4,7 @@ import LineChart from '../Dashboard/Chart'
 import "./Dashboard.css"
 import Header from "../Header/Header";
 import Page from "./GoldPrice/Table";
+import BarChart from "./BarChart";
 
 const Dashboard = () => {
   return (
@@ -102,88 +103,27 @@ const Dashboard = () => {
                     <div className="self-stretch flex flex-row items-start justify-between gap-[20px] mq450:flex-wrap">
                       <div className="flex flex-col items-start justify-start gap-[4px]">
                         <div className="relative leading-[160%] inline-block min-w-[73px] z-[1]">
-                          User Activity
+                          Number of Custome 
                         </div>
                         <div className="flex flex-row items-start justify-start gap-[8px] text-lg text-greyscale-900">
                           <b className="relative tracking-[0.2px] leading-[140%] inline-block min-w-[63px] z-[1]">
                             10,320
                           </b>
                         </div>
-                      </div>
-                      <div className="w-[97px] rounded-lg box-border flex flex-row items-start justify-start py-1.5 px-[7px] gap-[4px] z-[1] border-[1px] border-solid border-greyscale-100">
-                        <div className="relative leading-[160%] font-semibold inline-block min-w-[61px]">
-                          This Week
-                        </div>
-                        <div className="flex flex-col items-start justify-start pt-[1.5px] px-0 pb-0">
-                          <img
-                            className="w-4 h-4 relative overflow-hidden shrink-0"
-                            alt=""
-                            src="/chevrondown-2.svg"
-                          />
-                        </div>
-                      </div>
+                      </div>                     
+                      <select class=" formbar border rounded-lg form-select" id="yearSelect">
+                        <option value="ThisWeek">This Week</option>
+                        <option value="LastWeek">Last Week</option>
+                      </select>                    
                     </div>
-                    <div className="w-[275px] h-px absolute !m-[0] right-[23px] bottom-[99px] box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
-                    <div className="w-[275px] h-px absolute !m-[0] right-[23px] bottom-[140px] box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
-                    <div className="w-[275px] h-px absolute !m-[0] top-[147px] right-[23px] box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[16px] text-right mq450:flex-wrap">
-                      <div className="flex flex-col items-end justify-start gap-[22.3px] z-[1]">
-                        <div className="relative leading-[160%] inline-block min-w-[21px]">
-                          10K
-                        </div>
-                        <div className="relative leading-[160%] inline-block min-w-[16px]">
-                          8K
-                        </div>
-                        <div className="relative leading-[160%] inline-block min-w-[16px]">
-                          5K
-                        </div>
-                        <div className="relative leading-[160%] inline-block min-w-[16px]">
-                          3K
-                        </div>
-                        <div className="relative leading-[160%] inline-block min-w-[16px]">
-                          0K
-                        </div>
-                      </div>
+                    <div className="self-stretch flex flex-row items-start justify-start gap-[16px] text-right mq450:flex-wrap">                      
                       <div className="flex-1 flex flex-col items-start justify-start pt-[9px] px-0 pb-0 box-border min-w-[178px] text-left">
                         <div className="self-stretch flex flex-col items-start justify-start gap-[15px]">
                           <div className="self-stretch flex flex-col items-start justify-start gap-[1px]">
-                            <div className="self-stretch h-px relative box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
                             <div className="self-stretch h-[164px] relative">
-                              <div className="absolute top-[163px] left-[0px] box-border w-[275px] h-px z-[1] border-t-[1px] border-solid border-greyscale-100" />
-                              <div className="absolute top-[0px] left-[8px] rounded-t-lg rounded-b-none bg-primary-100 w-6 h-[163px] z-[2]" />
-                              <div className="absolute top-[102px] left-[46px] rounded-t-lg rounded-b-none bg-primary-100 w-6 h-[61px] z-[2]" />
-                              <div className="absolute top-[58px] left-[85px] rounded-t-lg rounded-b-none bg-primary-100 w-6 h-[105px] z-[2]" />
-                              <div className="absolute top-[44px] left-[123px] rounded-t-lg rounded-b-none bg-primary-600-base w-6 h-[119px] z-[2]" />
-                              <div className="absolute top-[86px] left-[164px] rounded-t-lg rounded-b-none bg-primary-100 w-6 h-[77px] z-[2]" />
-                              <div className="absolute top-[128px] left-[202px] rounded-t-lg rounded-b-none bg-primary-100 w-6 h-[35px] z-[2]" />
-                              <div className="absolute top-[29px] left-[240px] rounded-t-lg rounded-b-none bg-primary-100 w-6 h-[134px] z-[2]" />
+                              <BarChart />
                             </div>
-                          </div>
-                          <div className="self-stretch flex flex-row items-start justify-start py-0 pr-[17px] pl-3.5">
-                            <div className="flex-1 flex flex-row items-start justify-between gap-[20px] z-[1] mq450:flex-wrap">
-                              <div className="relative leading-[160%] inline-block min-w-[8px] mq450:w-full mq450:h-2">
-                                S
-                              </div>
-                              <div className="relative leading-[160%] inline-block min-w-[11px] mq450:w-full mq450:h-[11px]">
-                                M
-                              </div>
-                              <div className="relative leading-[160%] inline-block min-w-[8px] mq450:w-full mq450:h-2">
-                                T
-                              </div>
-                              <div className="relative leading-[160%] inline-block min-w-[12px] mq450:w-full mq450:h-3">
-                                W
-                              </div>
-                              <div className="relative leading-[160%] inline-block min-w-[8px] mq450:w-full mq450:h-2">
-                                T
-                              </div>
-                              <div className="relative leading-[160%] inline-block min-w-[8px] mq450:w-full mq450:h-2">
-                                F
-                              </div>
-                              <div className="relative leading-[160%] inline-block min-w-[8px] mq450:w-full mq450:h-2">
-                                S
-                              </div>
-                            </div>
-                          </div>
+                          </div>                         
                         </div>
                       </div>
                     </div>

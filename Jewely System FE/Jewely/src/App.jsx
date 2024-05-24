@@ -9,6 +9,7 @@ import ManageJewely from './ManageJewely/ManageJewely'
 import Dashboard from "./Dashboard/Dashboard"
 import LineChart from "./Dashboard/Chart"
 import Page from "./Dashboard/GoldPrice/Table"
+import BarChart from './Dashboard/BarChart'
 
 export default function App() {
   return (
