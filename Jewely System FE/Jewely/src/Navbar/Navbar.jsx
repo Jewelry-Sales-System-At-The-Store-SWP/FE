@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { Link } from "react-router-dom"
 import React from "react";
 import helplogo from "../assets/Info Square.png"
 import Setinglogo from "../assets/Setting.png"
@@ -6,28 +7,33 @@ import accountlogo from "../assets/Profile.png"
 import dashboardlogo from "../assets/Chart.png"
 import profilelog from "../assets/Document.png"
 import wallet from "../assets/Wallet.png"
-
+import ManagePromotion from "../ManagePromotion/ManagePromotion";
+import Dashboard from "../Dashboard/Dashboard";
+import ManageCustomer from "../ManageCustomer/ManageCustomer";
+import ManageJewely from "../ManageJewely/ManageJewely";
+import InvoiceAdmin from "../InvoiceAdmin/InvoiceAdmin";
 const Sidebar = () => {
   const onDashboardContainerClick = useCallback(() => {
-    // Please sync "Dashboard" to the project
+    <Link to="/">Dashboard</Link>
   }, []);
 
   const onManageStaffContainerClick = useCallback(() => {
-    // Please sync "Manage Staff" to the project
+    // <Link to ="/">Manager</Link>
   }, []);
 
   const onManageCustomClick = useCallback(() => {
-    // Please sync "Manage customers" to the project
+    <Link to="/">ManageCustomer</Link>
   }, []);
 
   const onManagePromotionContainerClick = useCallback(() => {
-    // Please sync "Manage Promotion" to the project
+    <Link to="/">ManagePromotion</Link>
   }, []);
   const onManageJewelyContainerClick = useCallback(() => {
-    // Please sync "Manage Promotion" to the project
+    <Link to="/">ManageJewely</Link>
+
   }, []);
   const onPaymentTextClick = useCallback(() => {
-    // Please sync "INVOICE" to the project
+    <Link to="/">ManageJewely</Link>
   }, []);
 
   return (
@@ -56,95 +62,98 @@ const Sidebar = () => {
         </div>
         <div className="self-stretch flex flex-col items-start justify-start gap-[19px] text-xs text-darkslategray-300">
           <div className="flex flex-row items-start justify-start pt-0 px-4 pb-[5px]">
-            <div
+            <Link
+              to="/"
               className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] cursor-pointer z-[2]"
+              style={{ textDecoration: 'none', color: 'inherit' }}
               onClick={onDashboardContainerClick}
             >
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px]"
                 alt=""
-                src="/iconlyboldchart@2x.png"
+                src="src/assets/iconlyboldchart@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
                 <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[72px]">
                   Dashboard
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="flex flex-row items-start justify-start pt-0 px-4 pb-[5px]">
-            <div
+            <Link
+              to="/manage-staff"
               className="flex flex-row items-start justify-start gap-[10px] opacity-[0.6] cursor-pointer z-[2]"
+              style={{ textDecoration: 'none', color: 'inherit' }}
               onClick={onManageStaffContainerClick}
             >
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
                 alt=""
-                src="/iconlyboldprofile@2x.png"
+                src="src/assets/iconlyboldprofile@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-1.5 px-0 pb-0">
                 <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[87px] shrink-0 [debug_commit:1de1738]">
                   Manage Staff
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="flex flex-row items-start justify-start pt-0 px-4 pb-[5px]">
-            <div
+            <Link
+              to="/manage-custom"
               className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] cursor-pointer z-[2]"
+              style={{ textDecoration: 'none', color: 'inherit' }}
               onClick={onManageCustomClick}
             >
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
                 alt=""
-                src="/iconlybolddocument@2x.png"
+                src="src/assets/iconlybolddocument@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
                 <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[108px] shrink-0 [debug_commit:1de1738]">
                   Manage Custom
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
-          <div className="self-stretch flex flex-col items-start justify-start gap-[12px]">
-            <div className="flex flex-row items-start justify-start py-0 px-4">
-              <div
-                className="flex flex-row items-start justify-start gap-[11px] opacity-[0.6] cursor-pointer z-[2]"
-                onClick={onManagePromotionContainerClick}
-              >
-                <img
-                  className="h-[18px] w-[18px] relative object-cover min-h-[18px]"
-                  alt=""
-                  src="/iconlyboldchat@2x.png"
-                />
-                <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
-                  <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[123px]">
-                    Manage Promotion
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="self-stretch flex flex-row items-start justify-start py-3 px-4 relative">
+          <div className="flex flex-row items-start justify-start py-0 px-4 pb-[5px]">
+            <Link
+              to="/manage-promotion"
+              className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] cursor-pointer z-[2]"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={onManagePromotionContainerClick}
+            >
               <img
-                className="h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] rounded-8xs max-w-full overflow-hidden max-h-full z-[2]"
-                alt=""
-                src="/active-background.svg"
+                className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
+                src="src/assets/iconlyboldchat@2x.png"
               />
-              <div className="flex flex-row items-start justify-start gap-[11px] opacity-[0.6] cursor-pointer z-[3]"
-                 onClick={onManageJewelyContainerClick}
-              >
-                <img
-                  className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
-                  alt=""
-                  src="/iconlyboldchat@2x.png"
-                />
-                <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0 ">
-                  <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[101px] shrink-0 [debug_commit:1de1738]">
-                    Manage Jewely
-                  </div>
+              <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
+                <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[123px] shrink-0 [debug_commit:1de1738]">
+                  Manage Promotion
                 </div>
               </div>
-            </div>
+            </Link>
+          </div>
+          <div className="flex flex-row items-start justify-start py-0 px-4 pb-[20px]">
+            <Link
+              to="/manage-jewelry"
+              className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] cursor-pointer z-[3]"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={onManageJewelyContainerClick}
+            >
+              <img
+                className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
+                alt=""
+                src="src/assets/iconlyboldchat@2x.png"
+              />
+              <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
+                <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[123px] shrink-0 [debug_commit:1de1738]">
+                  Manage Jewelry
+                </div>
+              </div>
+            </Link>
           </div>
           <div className="flex flex-row items-start justify-start pt-0 px-[17px] pb-[5px] text-2xs text-gray">
             <div className="relative tracking-[1px] leading-[11px] inline-block min-w-[47px] z-[2]">
@@ -156,7 +165,7 @@ const Sidebar = () => {
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
                 alt=""
-                src="/iconlyboldwallet@2x.png"
+                src="src/assets/iconlyboldwallet@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
                 <div
@@ -173,7 +182,7 @@ const Sidebar = () => {
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
                 alt=""
-                src="/iconlyboldprofile@2x.png"
+                src="src/assets/iconlyboldprofile@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
                 <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[61px] shrink-0 [debug_commit:1de1738]">
@@ -187,7 +196,7 @@ const Sidebar = () => {
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px]"
                 alt=""
-                src="/iconlyboldinfo-square@2x.png"
+                src="src/assets/iconlyboldinfo-square@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
                 <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[38px]">

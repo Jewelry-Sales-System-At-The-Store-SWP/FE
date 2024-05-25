@@ -232,7 +232,7 @@ const JewelleryDataTable = () => {
           className="absolute top-[9.2px] left-[8.9px] w-[20.9px] h-[16.3px] overflow-hidden z-[1]"
           loading="lazy"
           alt=""
-          src="/search-1.svg"
+          src="src/assets/search-1.svg"
         />
       </div>
       <div className="cursor-pointer absolute top-[598.2px] left-[758px] rounded-10xs-5 bg-blueviolet box-border w-[15.5px] flex flex-row items-start justify-start py-[3px] px-1.5 z-[1] text-5xs-5 text-white border-[0.6px] border-solid border-blueviolet">
