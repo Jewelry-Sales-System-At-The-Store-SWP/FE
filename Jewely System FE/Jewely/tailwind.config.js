@@ -78,7 +78,7 @@ module.exports = {
         },
       },
       spacing: {
-        // Merge any spacing customizations if present
+        
       },
       fontFamily: {
         poppins: "Poppins",
