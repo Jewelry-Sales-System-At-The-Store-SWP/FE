@@ -7,3 +7,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
+
+// write a function to reverse a input string
+

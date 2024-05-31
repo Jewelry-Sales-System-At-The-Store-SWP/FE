@@ -1,4 +1,3 @@
-import JewelleryDataTable from "../ManageJewely/ManageJewelyData";
 import Sidebar from "../Navbar/Navbar";
 import PromotionDataTable from "./ManagePromotionData";
 const ManagePromotion = () => {
