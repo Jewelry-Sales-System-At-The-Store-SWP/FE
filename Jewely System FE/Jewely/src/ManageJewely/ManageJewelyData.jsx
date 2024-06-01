@@ -13,7 +13,7 @@ const JewelleryDataTable = () => {
         Showing data 1 to 8 of 256K entries
       </div>
       <div className="absolute top-[31px] left-[54.9px] text-sm-8 tracking-[-0.01em] font-semibold text-black whitespace-pre-wrap inline-block w-[173.5px] h-[21px] z-[1]">
-        ALL JEWELY
+        ALL JEWELRY
       </div>
       <div className="absolute top-[160px] left-[48px] tracking-[-0.01em] font-medium text-black inline-block w-[122.8px] h-4 z-[1]">{`Dimond Ring `}</div>
       <div className="absolute top-[160px] left-[203px] tracking-[-0.01em] font-medium inline-block w-[110.2px] h-4 z-[1]">
