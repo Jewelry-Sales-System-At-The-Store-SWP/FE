@@ -23,7 +23,7 @@ const JewelleryDataTable = () => {
       />
 
       <div className="absolute top-[31px] left-[54.9px] text-sm-8 tracking-[-0.01em] font-semibold text-black whitespace-pre-wrap inline-block w-[173.5px] h-[21px] z-[1]">
-        ALL JEWELY
+        ALL JEWELRY
       </div>
       <div class="relative z-10">
         {jewellery.map((item, index) => (

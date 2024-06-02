@@ -1,7 +1,22 @@
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-
+import "./ManageCustomer.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
 const CustomerDataTable = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5188/api/Customer")
+      .then((response) => {
+        setData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching promotion details:", error);
+      });
+  }, []);
   return (
     <div className="absolute w-[1236px] h-[726px] top-[106px] left-[280px]">
       <div className="absolute w-[1236px] h-[726px] top-0 left-0">
@@ -26,23 +41,37 @@ const CustomerDataTable = () => {
                     Point
                   </div>
                 </div>
-                <div className="absolute w-[813px] h-[19px] top-[46px] left-[25px]">
-                  <div className="absolute w-[118px] top-px left-[158px] [font-family:'Poppins',Helvetica] font-medium text-[#292d32] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    2, Address...
-                  </div>
-                  <div className="absolute w-[114px] top-px left-[349px] [font-family:'Poppins',Helvetica] font-medium text-[#292d32] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    0902332123
-                  </div>
-                  <div className="w-[160px] top-px left-[521px] text-[8.8px] tracking-[-0.09px] absolute [font-family:'Poppins',Helvetica] font-medium text-[#292d32] leading-[normal]">
-                    abc@gmail.com
-                  </div>
-                  <div className="w-[77px] top-0 left-[726px] text-[10px] tracking-[-0.10px] absolute [font-family:'Poppins',Helvetica] font-medium text-[#292d32] leading-[normal]">
-                    1.000.000
-                  </div>
-                  <div className="top-[2px] text-black absolute left-0 [font-family:'Poppins',Helvetica] font-medium text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Janes Copper
-                  </div>
-                </div>
+                {data && (
+                  <table className="absolute w-[813px] h-[19px] top-[46px] left-[25px]">
+                    <tbody>
+                      {data.map((item, index)=>{
+                        return(
+                          <tr key={index} className="customer-table">
+                            <td className="customer-name">{item.name}</td>
+                            <td className="customer-address">{item.address}</td>
+                            <td className="customer-phone">{item.phone}</td>
+                            <td className="customer-mail">1</td>
+                            <td className="customer-point">{item.point}</td>
+                            <td>
+                              <button className="btn-more-info">
+                                More Info
+                              </button>
+                            </td>
+                            <td>
+                              <button className="btn-x">X</button>
+                            </td>
+                          </tr>
+                        );
+                        
+
+                      })}
+
+                    </tbody>
+                  </table>
+
+                )
+                }
+             
               </div>
             </div>
             <p className="absolute w-[267px] top-[642px] left-[79px] [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
@@ -121,17 +150,6 @@ const CustomerDataTable = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="w-[92px] top-[168px] left-[927px] bg-[#15c09861] border-[#00b086] flex items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] absolute rounded-[2.5px] border-[0.63px] border-solid">
-        <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#008667] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-          More Infor
-        </div>
-      </div>
-
-      <div className="w-[29px] h-[19px] top-[167px] left-[1040px] bg-[#d1262661] border-[#d02525] flex items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] absolute rounded-[2.5px] border-[0.63px] border-solid">
-        <div className="relative w-fit mt-[-0.13px] [font-family:'Poppins',Helvetica] font-medium text-[#d02525] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-          X
         </div>
       </div>
 
