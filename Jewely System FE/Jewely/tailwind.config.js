@@ -78,7 +78,8 @@ module.exports = {
         },
       },
       spacing: {
-        
+          '62.5': '250px',  
+           '75': '265px',
       },
       fontFamily: {
         poppins: "Poppins",

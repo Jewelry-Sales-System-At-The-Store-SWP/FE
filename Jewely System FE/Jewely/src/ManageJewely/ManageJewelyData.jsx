@@ -117,18 +117,6 @@ const JewelleryDataTable = () => {
           </div>
         </div>
       </div>
-
-      {/* <form className="absolute top-[37px] left-[848px] rounded-[6.25px] bg-ghostwhite-100 w-[169.1px] flex flex-row items-start justify-start py-[7.9px] pr-[13.1px] pl-[16.5px] box-border gap-[7.3px] whitespace-nowrap z-[1] text-5xs-5 text-gray-100">
-      <form className="h-[30px] w-[169.1px] relative rounded-[6.25px] bg-ghostwhite-100 hidden" />
-      <form className="flex-1 relative tracking-[-0.01em] z-[1]">
-          <select class="form-select form-select-lg absolute top-[37px] left-[848px] rounded-[6.25px] bg-ghostwhite-100 w-[169.1px] flex flex-row items-start justify-start py-[7.9px] pr-[13.1px] pl-[16.5px] box-border gap-[7.3px] whitespace-nowrap z-[1] text-5xs-5 text-gray-100">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
-      </form>
-     </form> */}
       <form className="form absolute left-[848px] w-[169.1px] flex flex-row items-start justify-start whitespace-nowrap z-[1] text-5xs-5 ">
         <select class="custom-select form-select form-select-lg">
           <option>ALL</option>
