@@ -1,9 +1,9 @@
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./ManagePromotion.css";
+import "./ManageStaff.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-const PromotionDataTable = () => {
+const StaffDataTable = () => {
   const [data, setJewellery] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:5188/api/Promotion/GetAll')
