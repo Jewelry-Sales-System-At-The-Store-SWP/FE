@@ -12,9 +12,9 @@ const ManageStaff = () => {
         />
         <div className=" relative text-xs tracking-[0.5px] leading-[13px] font-poppins text-darkslategray-300 text-left inline-block min-w-[106.2px] z-[1]">{`Delicious Burger `}</div>
       </button>
-      <PromotionDataTable />
+      <StaffDataTable />
     </div>
   );
 };
 
-export default ManagePromotion;
+export default ManageStaff;
