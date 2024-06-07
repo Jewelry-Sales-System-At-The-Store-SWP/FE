@@ -1,24 +1,14 @@
 import { useCallback } from "react";
 import { Link } from "react-router-dom"
 import React from "react";
-import helplogo from "../assets/Info Square.png"
-import Setinglogo from "../assets/Setting.png"
-import accountlogo from "../assets/Profile.png"
-import dashboardlogo from "../assets/Chart.png"
-import profilelog from "../assets/Document.png"
-import wallet from "../assets/Wallet.png"
-import ManagePromotion from "../ManagePromotion/ManagePromotion";
-import Dashboard from "../Dashboard/Dashboard";
-import ManageCustomer from "../ManageCustomer/ManageCustomer";
-import ManageJewely from "../ManageJewely/ManageJewely";
-import InvoiceAdmin from "../InvoiceAdmin/InvoiceAdmin";
+
 const Sidebar = () => {
   const onDashboardContainerClick = useCallback(() => {
     <Link to="/">Dashboard</Link>
   }, []);
 
   const onManageStaffContainerClick = useCallback(() => {
-    // <Link to ="/">Manager</Link>
+    <Link to ="/">ManagerStaff</Link>
   }, []);
 
   const onManageCustomClick = useCallback(() => {

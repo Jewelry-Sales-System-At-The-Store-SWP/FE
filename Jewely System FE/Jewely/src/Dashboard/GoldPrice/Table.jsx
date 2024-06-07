@@ -56,14 +56,6 @@ const Page = () => {
             Buy
           </div>
         </div>
-        <div className="self-stretch w-[30px] relative leading-[160%] font-medium hidden z-[3]">
-          Price
-        </div>
-        <img
-          className="h-5 w-5 relative overflow-hidden shrink-0 hidden z-[4]"
-          alt=""
-          src="/dots.svg"
-        />
       </div>
       {goldPrices.length > 0 ? goldPrices.map((price, index) => (
         <div key={index} className="self-stretch h-[57px] relative shrink-0 [debug_commit:bf4bc93] max-w-full mq750:h-auto mq750:min-h-[57] text-xs">
@@ -71,13 +63,13 @@ const Page = () => {
             <div className="min-w-[600px] bg-white p-3">
               <div className="grid grid-cols-3 gap-4">
                 <div className="font-semibold col-span-1">
-                  {price.type}
+                  {price.type} 
                 </div>
                 <div className="font-semibold text-right col-span-1 pr-5">
-                  {price.sellPrice}
+                  {price.sellPrice} triệu đồng VND
                 </div>
                 <div className="buytab font-semibold text-right col-span-1 ">
-                  {price.buyPrice}
+                  {price.buyPrice} triệu đồng VND
                 </div>
               </div>
             </div>

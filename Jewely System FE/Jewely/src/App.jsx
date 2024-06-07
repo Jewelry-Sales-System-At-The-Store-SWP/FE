@@ -23,6 +23,7 @@ export default function App() {
         <Route path="/invoice-admin" element={<InvoiceAdmin />} />
         <Route path="/warranty-certificate" element={<WarrantyCertificate />} />
         <Route path="/manage-custom" element={<ManageCustomer />} />       
+        <Route path="/manage-staff" element={<ManageStaff />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<Dashboard />} /> 
       </Routes>

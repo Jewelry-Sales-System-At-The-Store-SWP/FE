@@ -4,11 +4,11 @@ import "./ManagePromotion.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const PromotionDataTable = () => {
-  const [data, setJewellery] = useState([]);
+  const [data, setPromotion] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:5188/api/Promotion/GetAll')
       .then(response => {
-        setJewellery(response.data);
+        setPromotion(response.data);
       })
       .catch(error => {
         console.error('There was an error fetching the jewellery data:', error);
