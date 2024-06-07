@@ -80,29 +80,28 @@ const StaffDataTable = () => {
               <b className="self-stretch relative text-sm-8 tracking-[-0.01em] font-semibold font-poppins text-black text-left z-[1]">
                 All STAFF
               </b>
-              <div className="w-[120.5px] relative text-4xs-8 tracking-[-0.01em] font-poppins text-mediumaquamarine-200 text-left inline-block z-[1]">
-                Active Staff
+              <div className="w-[120.5px] relative text-4xs-8 tracking-[-0.01em] font-poppins text-green-500 text-left inline-block z-[1]">
+              Active Staff
               </div>
+
             </div>
             {data && (
-                  <table className="absolute w-[813px] h-[19px] top-[46px] left-[25px]">
+                  <table className="absolute w-[813px] h-[19px] top-[100px] left-[25px]">
                     <tbody>
                       {data.map((item, index)=>{
                         return(
                           <tr key={index} className="staff-table">
-                            <td className="staff-name">{item.name}</td>
-                            <td className="staff-counter">{item.address}</td>
-                            <td className="staff-phone">{item.phone}</td>
-                            <td className="staff-mail">1</td>
-                            <td className="staff-revenue">{item.point}</td>
+                            <td className="staff-name">{item.username}</td>
+                            <td className="staff-counter">{item.counter}</td>
+                            <td className="staff-phone">1</td>
+                            <td className="staff-mail">{item.email}</td>
+                            <td className="staff-revenue">1</td>
                             <td>
                               <button className="btn-more-info">
-                                More Info
+                                Active
                               </button>
                             </td>
-                            <td>
-                              <button className="btn-x">X</button>
-                            </td>
+                          
                           </tr>
                         );
                         
