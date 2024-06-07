@@ -95,7 +95,7 @@ const JewelleryDataTable = () => {
           Base Price
         </div>
         <div className="absolute top-[112.6px] left-[752.3px] tracking-[-0.01em] font-medium text-silver inline-block w-[59.9px] h-[16.4px] z-[1]">
-          Labor Cost
+          Stone Cost
         </div>
       </div>
       <div className="absolute top-[37.3px] left-[591.1px] rounded-[6.25px] bg-ghostwhite-200 w-[229.8px] h-[34.6px] z-[1] text-5xs-5 text-silver">
