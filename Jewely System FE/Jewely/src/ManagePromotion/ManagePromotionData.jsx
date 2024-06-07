@@ -50,35 +50,7 @@ const PromotionDataTable = () => {
           </div>
         ))}
       </div >
-      {/* <div class="relative z-[1] mt-[0px]">
-      <div class="cursor-pointer absolute top-[598.2px] left-[758px] rounded-10xs-5 bg-blueviolet box-border w-[15.5px] flex flex-row items-start justify-start py-[3px] px-1.5 text-5xs-5 text-white border-[0.6px] border-solid border-blueviolet">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[3px]">1</div>
-      </div>
-      <div class="cursor-pointer absolute top-[598.2px] left-[797.6px] rounded-10xs-5 bg-whitesmoke-100 box-border w-[16.3px] flex flex-row items-start justify-start py-[3px] pr-1 pl-[5.6px] text-5xs-5 text-darkslategray-100 border-[0.6px] border-solid border-whitesmoke-200">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[5px]">2</div>
-      </div>
-      <div class="cursor-pointer absolute top-[598.2px] left-[837.2px] rounded-10xs-5 bg-whitesmoke-100 box-border w-[15px] flex flex-row items-start justify-start py-[3px] px-1 text-5xs-5 text-darkslategray-100 border-[0.6px] border-solid border-whitesmoke-200">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[5px]">3</div>
-      </div>
-      <div class="cursor-pointer absolute top-[598.2px] left-[875.8px] rounded-10xs-5 bg-whitesmoke-100 box-border w-[16.3px] flex flex-row items-start justify-start py-[3px] pr-1 pl-[5.6px] text-5xs-5 text-darkslategray-100 border-[0.6px] border-solid border-whitesmoke-200">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[5px]">4</div>
-      </div>
-      <div class="cursor-pointer absolute top-[598.2px] left-[938.9px] rounded-10xs-5 bg-whitesmoke-100 box-border w-[16.3px] flex flex-row items-start justify-start py-[3px] pr-0.5 pl-[3px] text-5xs-5 text-darkslategray-100 border-[0.6px] border-solid border-whitesmoke-200">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[10px]">40</div>
-      </div>
-      <div class="cursor-pointer absolute top-[598.2px] left-[717.3px] rounded-10xs-5 bg-whitesmoke-100 box-border w-[16.3px] flex flex-row items-start justify-start py-[3px] px-[5px] text-5xs-5 text-darkslategray-100 border-[0.6px] border-solid border-whitesmoke-200">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[5px]">{`<`}</div>
-      </div>
-      <div class="cursor-pointer absolute top-[598.2px] left-[979.6px] rounded-10xs-5 bg-whitesmoke-100 box-border w-[16.3px] flex flex-row items-start justify-start py-[3px] pr-1 pl-[5.6px] text-5xs-5 text-darkslategray-100 border-[0.6px] border-solid border-whitesmoke-200">
-        <div class="relative tracking-[-0.01em] leading-[8px] font-medium inline-block min-w-[5px]">{`>`}</div>
-      </div>
-      <div class="absolute top-[604.6px] left-[916.5px] text-5xs-5 tracking-[-0.01em] leading-[10.1px] font-medium text-black inline-block w-[10.3px] h-[10.1px] min-w-[10.3px]">
-        ...
-      </div>
-      <div class="absolute top-[599.8px] left-[54.7px] tracking-[-0.01em] font-medium text-silver whitespace-pre-wrap inline-block w-[260.4px] h-[16.4px] shrink-0 [debug_commit:1de1738]">
-        Showing data 1 to 8 of 256K entries
-      </div>
-    </div> */}
+
       <div className="header-data">
         <div className="absolute top-[138.1px] left-[14px] box-border w-[1036.9px] h-[0.6px] z-[1] border-t-[0.6px] border-solid border-whitesmoke-200" />
 
@@ -111,6 +83,11 @@ const PromotionDataTable = () => {
         />
       </div>
       <div className="absolute top-[37.3px] ml-62.5  left-[400px] flex gap-[6.25px]">
+      <div className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#D1262661] rounded-[2.5px] border-[0.63px] ml-[-10px] border-solid border-[#D1262661]">
+          <div className="relative w-fit [font-family:'Poppins',Helvetica] font-medium text-[#D1262661] text-[8.8px] tracking-[-0.09px] leading-[normal]">
+            Edit
+          </div>
+        </div>
         <div className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#15c09861] rounded-[2.5px] border-[0.63px] mr-[20px] border-solid border-[#00b086]">
           <div className="relative w-fit font-medium text-[#008667] text-[8.8px] tracking-[-0.09px] leading-[normal]">
             Add

@@ -8,6 +8,7 @@ import InvoiceAdmin from './InvoiceAdmin/InvoiceAdmin'
 import WarrantyCertificate from './WarrantyCertificate/WarrantyCertificate'
 import ManageCustomer from './ManageCustomer/ManageCustomer'
 import Dashboard from "./Dashboard/Dashboard"
+import ManageStaff from './ManageStaff/ManageStaff'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/manage-jewelry" element={<ManageJewely />} />
         <Route path="/manage-promotion" element={<ManagePromotion />} />
+        <Route path="/manage-staff" element={<ManageStaff />} />
         <Route path="/invoice-template" element={<InvoiceTemplate />} />
         <Route path="/invoice-admin" element={<InvoiceAdmin />} />
         <Route path="/warranty-certificate" element={<WarrantyCertificate />} />
