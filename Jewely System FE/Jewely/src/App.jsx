@@ -20,7 +20,7 @@ export default function App() {
         <Route path="/manage-promotion" element={<ManagePromotion />} />
         <Route path="/manage-staff" element={<ManageStaff />} />
         <Route path="/invoice-template" element={<InvoiceTemplate />} />
-        <Route path="/invoice-admin" element={<InvoiceAdmin />} />
+        <Route path="/invoice-sell" element={<InvoiceAdmin />} />
         <Route path="/warranty-certificate" element={<WarrantyCertificate />} />
         <Route path="/manage-custom" element={<ManageCustomer />} />       
         <Route path="/manage-staff" element={<ManageStaff />} />
