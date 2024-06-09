@@ -12,6 +12,8 @@ import ManageStaff from './ManageStaff/ManageStaff'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddPromotion from './AddPromotion/AddPromotion'
 import EditPromotion from './EditPromotion/EditPromotion'
+import AddCustomer from './AddCustomer/AddCustomer'
+import EditCustomer from './EditCustomer/EditCustomer'
 
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path='/add-promotion' element={<AddPromotion />} />
         <Route path='/edit-promotion' element={<EditPromotion />} />
+        <Route path='/add-customer' element={<AddCustomer />} />
+        <Route path='/edit-customer' element={<EditCustomer />} />
       </Routes>
     </div>
   </Router>
