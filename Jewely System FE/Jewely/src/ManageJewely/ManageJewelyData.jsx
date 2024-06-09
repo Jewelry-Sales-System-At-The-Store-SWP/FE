@@ -4,14 +4,18 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./ManageJewely.css";
+import "../ManagePromotion/ManagePromotion.css"
+import ReactPaginate from "react-paginate";
 
 const JewelleryDataTable = () => {
   const [jewellery, setJewellery] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
   const navigate = useNavigate();
-  const handleDelete = (promotionId) => {
+
+  const handleDelete = (jewelryId) => {
     Swal.fire({
-      title: "Are you sure that you want to delete this jewlery?",
+      title: "Are you sure that you want to delete this jewelry?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -21,11 +25,11 @@ const JewelleryDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5188/api/Promotion/DeletePromotion?id=${promotionId}`)
+          .delete(`http://localhost:5188/api/Promotion/DeletePromotion?id=${jewelryId}`)
           .then(() => {
             Swal.fire({
               title: "Deleted!",
-              text: "Your jewlery has been deleted.",
+              text: "Your jewelry has been deleted.",
               icon: "success",
             }).then(() => {
               Swal.fire({
@@ -36,8 +40,8 @@ const JewelleryDataTable = () => {
                 timer: 1500,
               });
             });
-            setPromotion(
-              data.filter((item) => item.promotionId !== promotionId)
+            setJewellery(
+              jewellery.filter((item) => item.jewelryId !== jewelryId)
             );
           })
           .catch((error) => {
@@ -63,6 +67,14 @@ const JewelleryDataTable = () => {
       });
   }, []);
 
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = jewellery.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(jewellery.length / itemsPerPage);
+
   return (
     <main className="absolute top-[117px] left-[266px] shadow-[0px_6.3px_37.5px_rgba(226,_236,_249,_0.5)] rounded-[18.75px] bg-white w-[1132px] h-[726px] text-left text-4xs-8 text-darkslategray-500 font-poppins">
       <img
@@ -75,7 +87,7 @@ const JewelleryDataTable = () => {
         ALL JEWELRY
       </div>
       <div className="relative z-10">
-        {jewellery.map((item, index) => (
+        {currentPageData.map((item, index) => (
           <div
             key={item.jewelryId}
             className="data absolute w-full left-0"
@@ -151,6 +163,19 @@ const JewelleryDataTable = () => {
           <option>Diamond Ring</option>
         </select>
       </form>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
     </main>
   );
 };

@@ -5,11 +5,16 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+
 const PromotionDataTable = () => {
+  const [data, setPromotion] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+
   useEffect(() => {
     axios
       .get("http://localhost:5188/api/Promotion/GetPromotions")
-      // axios.get('https://666427ef932baf9032aa2d16.mockapi.io/Promotions')
       .then((response) => {
         setPromotion(response.data);
       })
@@ -17,14 +22,17 @@ const PromotionDataTable = () => {
         console.error("There was an error fetching the promotion data:", error);
       });
   }, []);
+
   const navigate = useNavigate();
-  const [data, setPromotion] = useState([]);
+
   const handleClick = () => {
     navigate("/add-promotion");
   };
+
   const edit = () => {
     navigate("/edit-promotion");
   };
+
   const handleDelete = (promotionId) => {
     Swal.fire({
       title: "Are you sure that you want to delete this promotion?",
@@ -37,7 +45,9 @@ const PromotionDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5188/api/Promotion/DeletePromotion?id=${promotionId}`)
+          .delete(
+            `http://localhost:5188/api/Promotion/DeletePromotion?id=${promotionId}`
+          )
           .then(() => {
             Swal.fire({
               title: "Deleted!",
@@ -68,7 +78,14 @@ const PromotionDataTable = () => {
     });
   };
 
-  
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(data.length / itemsPerPage);
+
   return (
     <main className="absolute top-[117px] left-[266px] shadow-[0px_6.3px_37.5px_rgba(226,_236,_249,_0.5)] rounded-[18.75px] bg-white w-[1132px] h-[726px] text-left text-4xs-8 text-darkslategray-500 font-poppins">
       <img
@@ -80,8 +97,8 @@ const PromotionDataTable = () => {
       <div className="absolute top-[31px] left-[54.9px] text-sm-8 tracking-[-0.01em] font-semibold text-black whitespace-pre-wrap inline-block w-[173.5px] h-[21px] z-[1]">
         ALL PROMOTION
       </div>
-      <div class="relative z-10">
-        {data.map((item, index) => (
+      <div className="relative z-10">
+        {currentPageData.map((item, index) => (
           <div
             key={item.promotionId}
             className="data absolute w-full left-0"
@@ -121,7 +138,6 @@ const PromotionDataTable = () => {
           </div>
         ))}
       </div>
-
       <div className="header-data">
         <div className="absolute top-[138.1px] left-[14px] box-border w-[1036.9px] h-[0.6px] z-[1] border-t-[0.6px] border-solid border-whitesmoke-200" />
 
@@ -154,7 +170,7 @@ const PromotionDataTable = () => {
         />
       </div>
       <div className="absolute top-[37.3px] ml-62.5  left-[400px] flex gap-[6.25px]">
-       <div
+        <div
           onClick={handleClick}
           className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#15c09861] rounded-[2.5px] border-[0.63px] mr-[20px] border-solid border-[#00b086]"
         >
@@ -163,6 +179,19 @@ const PromotionDataTable = () => {
           </div>
         </div>
       </div>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
     </main>
   );
 };

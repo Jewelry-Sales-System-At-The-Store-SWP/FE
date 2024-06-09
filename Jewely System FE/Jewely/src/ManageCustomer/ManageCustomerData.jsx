@@ -1,11 +1,17 @@
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./ManageCustomer.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+import "../ManagePromotion/ManagePromotion.css";
 const CustomerDataTable = () => {
+  const [data, setPromotion] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("http://localhost:5188/api/Customer")
@@ -16,14 +22,15 @@ const CustomerDataTable = () => {
         console.error("There was an error fetching the promotion data:", error);
       });
   }, []);
-  const navigate = useNavigate();
-  const [data, setPromotion] = useState([]);
+
   const handleClick = () => {
     navigate("/add-customer");
   };
-  const edit = () => {
-    navigate("/edit-customer");
+
+  const edit = (customerId) => {
+    navigate(`/edit-customer/${customerId}`);
   };
+
   const handleDelete = (customerId) => {
     Swal.fire({
       title: "Are you sure that you want to delete this customer?",
@@ -51,9 +58,7 @@ const CustomerDataTable = () => {
                 timer: 1500,
               });
             });
-            setPromotion(
-              data.filter((item) => item.customerId !== customerId)
-            );
+            setPromotion(data.filter((item) => item.customerId !== customerId));
           })
           .catch((error) => {
             console.error("There was an error deleting the promotion:", error);
@@ -67,7 +72,14 @@ const CustomerDataTable = () => {
     });
   };
 
-  
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(data.length / itemsPerPage);
+
   return (
     <main className="absolute top-[117px] left-[266px] shadow-[0px_6.3px_37.5px_rgba(226,_236,_249,_0.5)] rounded-[18.75px] bg-white w-[1132px] h-[726px] text-left text-4xs-8 text-darkslategray-500 font-poppins">
       <img
@@ -79,10 +91,10 @@ const CustomerDataTable = () => {
       <div className="absolute top-[31px] left-[54.9px] text-sm-8 tracking-[-0.01em] font-semibold text-black whitespace-pre-wrap inline-block w-[173.5px] h-[21px] z-[1]">
         ALL CUSTOMERS
       </div>
-      <div class="relative z-10">
-        {data.map((item, index) => (
+      <div className="relative z-10">
+        {currentPageData.map((item, index) => (
           <div
-            key={item.name}
+            key={item.customerId}
             className="data absolute w-full left-0"
             style={{ top: `${160 + index * 100}px` }}
           >
@@ -92,8 +104,8 @@ const CustomerDataTable = () => {
             <div className="absolute left-[203px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10">
               {item.address}
             </div>
-            <div className="absolute left-[360px] ml-6  font-medium inline-block w-[114.8px] h-[16.4px] z-10">
-              {item.phone} 
+            <div className="absolute left-[360px] ml-6 font-medium inline-block w-[114.8px] h-[16.4px] z-10">
+              {item.phone}
             </div>
             <div className="absolute left-[546px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10">
               {item.mail}
@@ -102,7 +114,7 @@ const CustomerDataTable = () => {
               {item.point}
             </div>
             <button
-              onClick={edit}
+              onClick={() => edit(item.customerId)}
               className=" bg-[#15c09861] text-[#008667] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
             >
               Edit
@@ -120,10 +132,10 @@ const CustomerDataTable = () => {
       <div className="header-data">
         <div className="absolute top-[138.1px] left-[14px] box-border w-[1036.9px] h-[0.6px] z-[1] border-t-[0.6px] border-solid border-whitesmoke-200" />
 
-        <div className="absolute top-[110.4px] left-[54.7px] tracking-[-0.01em] font-medium text-silver inline-block w-[123.3px] h-[16.4px] shrink-0 [debug_commit:1de1738] z-[1]">
+        <div className="absolute top-[110.4px] left-[54.7px] tracking-[-0.01em] font-medium text-silver inline-block w-[123.3px] h-[16.4px] shrink-0 z-[1]">
           Name
         </div>
-        <div className="absolute top-[110.6px] left-[216px] tracking-[-0.01em] font-medium text-silver inline-block w-[93.5px] h-[16.3px] shrink-0 [debug_commit:1de1738] z-[1]">
+        <div className="absolute top-[110.6px] left-[216px] tracking-[-0.01em] font-medium text-silver inline-block w-[93.5px] h-[16.3px] shrink-0 z-[1]">
           Address
         </div>
         <div className="absolute top-[110.4px] left-[379px] tracking-[-0.01em] font-medium text-silver inline-block w-[111.3px] h-[16.4px] z-[1]">
@@ -148,8 +160,8 @@ const CustomerDataTable = () => {
           src="src/assets/search-1.svg"
         />
       </div>
-      <div className="absolute top-[37.3px] ml-62.5  left-[400px] flex gap-[6.25px]">
-       <div
+      <div className="absolute top-[37.3px] ml-62.5 left-[400px] flex gap-[6.25px]">
+        <div
           onClick={handleClick}
           className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#15c09861] rounded-[2.5px] border-[0.63px] mr-[20px] border-solid border-[#00b086]"
         >
@@ -158,6 +170,19 @@ const CustomerDataTable = () => {
           </div>
         </div>
       </div>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
     </main>
   );
 };
