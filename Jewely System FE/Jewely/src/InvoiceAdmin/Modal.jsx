@@ -1,19 +1,19 @@
-import React from "react";
-
+import React, { useEffect }  from "react";
 export default function Modal({ showModal, setShowModal, onBarcodeSubmit }) {
     const [barcode, setBarcode] = React.useState("");
     const handleInputChange = (event) => {
-        setBarcode(event.target.value)
-
+        setBarcode(event.target.value);
     };
     const handleSaveChanges = () => {
         onBarcodeSubmit(barcode);
         setShowModal(false);
+        setBarcode('');
     };
     const handleSubmit = (event) => {
         event.preventDefault();
         handleSaveChanges();
     };
+ 
     return (
         <>
             {showModal ? (
@@ -27,16 +27,17 @@ export default function Modal({ showModal, setShowModal, onBarcodeSubmit }) {
                                     <h1> INPUT BARCODE</h1>
                                 </div>
                                 <div className="relative p-6 flex-auto">
-                                    <form onSubmit={handleSubmit} class="col-span-2">
+                                    <form onSubmit={handleSubmit} class="col-span-2" >
                                         <input type="text"
                                             name="barcode"
                                             id="name"
                                             class="bg-gray-50 text-5xl border border-gray-300 text-black rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Type product Barcode"
-                                            required=""
+                                            required
                                             value={barcode}
                                             onChange={handleInputChange}
-                                            autoFocus>
+                                            autoFocus
+                                          >
                                         </input>
                                     </form>
                                 </div>

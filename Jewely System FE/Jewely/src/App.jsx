@@ -10,6 +10,7 @@ import ManageCustomer from './ManageCustomer/ManageCustomer'
 import Dashboard from "./Dashboard/Dashboard"
 import ManageStaff from './ManageStaff/ManageStaff'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import InvoiceAdminPage from './InvoiceAdmin/InvoiceAdmin'
 
 export default function App() {
   return (
@@ -20,7 +21,7 @@ export default function App() {
         <Route path="/manage-promotion" element={<ManagePromotion />} />
         <Route path="/manage-staff" element={<ManageStaff />} />
         <Route path="/invoice-template" element={<InvoiceTemplate />} />
-        <Route path="/invoice-sell" element={<InvoiceAdmin />} />
+        <Route path="/invoice-sell" element={<InvoiceAdminPage />} />
         <Route path="/warranty-certificate" element={<WarrantyCertificate />} />
         <Route path="/manage-custom" element={<ManageCustomer />} />       
         <Route path="/manage-staff" element={<ManageStaff />} />
