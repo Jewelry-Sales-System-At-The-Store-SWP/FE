@@ -14,6 +14,8 @@ import AddPromotion from './AddPromotion/AddPromotion'
 import EditPromotion from './EditPromotion/EditPromotion'
 import AddCustomer from './AddCustomer/AddCustomer'
 import EditCustomer from './EditCustomer/EditCustomer'
+import AddJewelry from './AddJewelry/AddJewelry'
+import EditJewelry from './EditJewelry/EditJewelry'
 
 export default function App() {
   return (
@@ -34,6 +36,8 @@ export default function App() {
         <Route path='/edit-promotion' element={<EditPromotion />} />
         <Route path='/add-customer' element={<AddCustomer />} />
         <Route path='/edit-customer' element={<EditCustomer />} />
+        <Route path='/add-jewelry' element={<AddJewelry />} />
+        <Route path='/edit-jewelry' element={<EditJewelry />} />
       </Routes>
     </div>
   </Router>
