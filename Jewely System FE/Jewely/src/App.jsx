@@ -10,6 +10,8 @@ import ManageCustomer from './ManageCustomer/ManageCustomer'
 import Dashboard from "./Dashboard/Dashboard"
 import ManageStaff from './ManageStaff/ManageStaff'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AddPromotion from './AddPromotion/AddPromotion'
+import EditPromotion from './EditPromotion/EditPromotion'
 
 export default function App() {
   return (
@@ -25,7 +27,9 @@ export default function App() {
         <Route path="/manage-custom" element={<ManageCustomer />} />       
         <Route path="/manage-staff" element={<ManageStaff />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<Dashboard />} /> 
+        <Route path="/" element={<Dashboard />} />
+        <Route path='/add-promotion' element={<AddPromotion />} />
+        <Route path='/edit-promotion' element={<EditPromotion />} />
       </Routes>
     </div>
   </Router>

@@ -4,6 +4,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        white: "#fff",
+        black: "#000",
+        firebrick: {
+          100: "#d12525",
+          200: "rgba(209, 38, 38, 0.38)",
+        },
+        tomato: {
+          100: "#f74d4d",
+          200: "rgba(247, 77, 77, 0.38)",
+        },
+        mediumseagreen: "#00b087",
+        mediumaquamarine: {
+          100: "#1ac9a1",
+          200: "rgba(22, 192, 152, 0.38)",
+        },
+        seagreen: {
+          100: "#008767",
+          200: "rgba(0, 166, 128, 0.38)",
+        },
+        gray: {
+          DEFAULT: "rgba(8, 36, 49, 0.5)",
+          100: "#18020c",
+          200: "rgba(255, 255, 255, 0.4)",
+          300: "rgba(24, 2, 12, 0.4)",
+          400: "rgba(0, 0, 0, 0.05)",
+          500: "rgba(24, 2, 12, 0.3)",
+          600: "rgba(24, 2, 12, 0.05)",
+          700: "#a6a6a6",
+        },
         "greyscale-100": "#f1f5f9",
         "greyscale-900": "#0f172a",
         "secondary-glamour-pink-500-base": "#ed4f9d",
@@ -11,7 +40,6 @@ module.exports = {
         aliceblue: "#e2e8f0",
         "greyscale-500": "#64748b",
         "greyscale-50": "#f8fafc",
-        white: "#fff",
         "colors-white-100": "#fff",
         "primary-primary-50": "#f0ebff",
         "primary-primary-500": "#7341fb",
@@ -41,30 +69,13 @@ module.exports = {
           300: "#273240",
           400: "#292d32",
         },
-        black: "#000",
         blueviolet: "#5932ea",
         silver: "#b5b7c0",
-        firebrick: {
-          100: "#d12525",
-          200: "rgba(209, 38, 38, 0.38)",
-        },
-        mediumaquamarine: "rgba(22, 192, 152, 0.38)",
-        mediumseagreen: "#00b087",
-        seagreen: "#008767",
         ghostwhite: {
           100: "#f9fbff",
           200: "#f1f2f7",
         },
         cornflowerblue: "rgba(112, 127, 221, 0.48)",
-        gray: {
-          DEFAULT: "rgba(8, 36, 49, 0.5)",
-          100: "#18020c",
-          200: "rgba(255, 255, 255, 0.4)",
-          300: "rgba(24, 2, 12, 0.4)",
-          400: "rgba(0, 0, 0, 0.05)",
-          500: "rgba(24, 2, 12, 0.3)",
-          600: "rgba(24, 2, 12, 0.05)",
-        },
         darkslateblue: "#5a67ba",
         dimgray: {
           DEFAULT: "#70594c",
@@ -78,11 +89,12 @@ module.exports = {
         },
       },
       spacing: {
-          '62.5': '250px',  
-           '75': '265px',
+        62.5: "250px",
+        75: "265px",
       },
       fontFamily: {
         poppins: "Poppins",
+        roboto: "Roboto",
         satoshi: "Satoshi",
         abeezee: "ABeeZee",
         "d8-semibold": "Inter",
@@ -90,11 +102,10 @@ module.exports = {
         lato: "Lato",
         cormorant: "Cormorant",
         "body-small-semibold": "Inter",
-         poppins: "Poppins",
       },
       borderRadius: {
-        "lg-8": "18.8px",
         "10xs-5": "2.5px",
+        "lg-8": "18.8px",
         "6xs-3": "6.3px",
         "8xs": "5px",
         "border-radius-br4": "4px",
@@ -111,23 +122,24 @@ module.exports = {
       lg: "18px",
       xl: "20px",
       "13xl": "32px",
-      xs: "12px",
-      base: "16px",
-      inherit: "inherit",
       "5xs-5": "7.5px",
       "4xs-8": "8.8px",
       "sm-8": "13.8px",
       "2xs": "11px",
+      inherit: "inherit",
     },
     screens: {
+      mq525: {
+        raw: "screen and (max-width: 525px)",
+      },
+      mq450: {
+        raw: "screen and (max-width: 450px)",
+      },
       mq700: {
         raw: "screen and (max-width: 700px)",
       },
       mq650: {
         raw: "screen and (max-width: 650px)",
-      },
-      mq450: {
-        raw: "screen and (max-width: 450px)",        
       },
       mq1325: {
         raw: "screen and (max-width: 1325px)",
@@ -153,13 +165,9 @@ module.exports = {
       mq725: {
         raw: "screen and (max-width: 725px)",
       },
-      mq450: {
-        raw: "screen and (max-width: 450px)",
-      },
     },
   },
   corePlugins: {
     preflight: false,
   },
 };
-
