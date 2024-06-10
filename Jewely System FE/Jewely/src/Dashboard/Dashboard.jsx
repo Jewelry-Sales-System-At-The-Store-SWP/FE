@@ -1,25 +1,56 @@
+import React from "react";
 import Sidebar from "../Navbar/Navbar";
+import { useLocation } from "react-router-dom";
 import CardSalesAnalytics from "../Dashboard/Data";
-import LineChart from '../Dashboard/Chart'
-import "./Dashboard.css"
+import LineChart from "../Dashboard/Chart";
+import "./Dashboard.css";
 import Header from "../Header/Header";
 import Page from "./GoldPrice/Table";
 import BarChart from "./BarChart";
+import { Bold } from "lucide-react";
 
 const Dashboard = () => {
+  const location = useLocation();
+  const { user } = location.state || {};
+
   return (
     <div className="w-full relative bg-additional-white overflow-hidden flex flex-row items-start justify-start gap-[20px] leading-[normal] tracking-[normal] mq1050:pl-5 mq1050:pr-5 mq1050:box-border">
       <Sidebar />
       <main className="flex-1 flex flex-col items-start justify-start pt-3 px-0 pb-0 box-border max-w-[calc(100%_-_260px)] mq1050:max-w-full">
         <section className="self-stretch flex flex-col items-end justify-start max-w-full text-left text-xs text-greyscale-500 font-body-medium-bold">
-          <main className="flex flex-row items-start justify-end py-0 px-[72px] mq450:pl-5 mq450:pr-5 mq450:box-border">
-          </main>
+          <main className="flex flex-row items-start justify-end py-0 px-[72px] mq450:pl-5 mq450:pr-5 mq450:box-border"></main>
           <div className="self-stretch h-[864px] bg-greyscale-50 overflow-y-auto shrink-0 flex flex-col items-start justify-start pt-0 px-0 pb-[648px] box-border gap-[24px] max-w-full z-[2] mt-[-3px] lg:pb-[421px] lg:box-border mq750:pb-[274px] mq750:box-border mq1050:h-auto">
             <header className="self-stretch bg-additional-white overflow-hidden shrink-0 flex flex-row items-end justify-start pt-[17px] px-8 pb-[18px] gap-[110.2px] top-[0] z-[99] sticky text-left text-sm text-greyscale-900 font-body-medium-bold mq450:gap-[28px] mq750:gap-[55px]">
               <div className="flex flex-col items-start justify-start gap-[4px] text-5xl">
                 <h1 className="m-0 relative text-inherit tracking-[0.2px] leading-[125%] font-bold font-inherit inline-block min-w-[114px] whitespace-nowrap">
                   Overview
                 </h1>
+                {user && (
+                  <div
+                    className="welcome-back"
+                    style={{
+                      position: "absolute",
+                      fontSize: "14px",
+                      marginLeft: "700px",
+                      fontWeight: "bold",
+                      color: "red",
+                    }}
+                  >
+                    <span>Welcome Back: {user.fullName}</span>
+                    {user.profilePicture && (
+                      <img
+                        className="profile-picture"
+                        src={user.profilePicture}
+                        alt={`${user.fullName}'s profile`}
+                        style={{
+                          width: "45px",
+                          height: "45px",
+                          marginLeft: "20px",
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
                 <div className="relative text-xs leading-[160%] text-greyscale-500 whitespace-nowrap">
                   Detailed information about your store
                 </div>
@@ -90,7 +121,10 @@ const Dashboard = () => {
                           </b>
                         </div>
                       </div>
-                      <select class="form border rounded-lg form-select" id="yearSelect">
+                      <select
+                        className="form border rounded-lg form-select"
+                        id="yearSelect"
+                      >
                         <option value="2024">2024</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
@@ -103,34 +137,37 @@ const Dashboard = () => {
                     <div className="self-stretch flex flex-row items-start justify-between gap-[20px] mq450:flex-wrap">
                       <div className="flex flex-col items-start justify-start gap-[4px]">
                         <div className="relative leading-[160%] inline-block min-w-[73px] z-[1]">
-                          Number of Custome 
+                          Number of Customers
                         </div>
                         <div className="flex flex-row items-start justify-start gap-[8px] text-lg text-greyscale-900">
                           <b className="relative tracking-[0.2px] leading-[140%] inline-block min-w-[63px] z-[1]">
                             10,320
                           </b>
                         </div>
-                      </div>                     
-                      <select class=" formbar border rounded-lg form-select" id="yearSelect">
+                      </div>
+                      <select
+                        className="formbar border rounded-lg form-select"
+                        id="yearSelect"
+                      >
                         <option value="ThisWeek">This Week</option>
                         <option value="LastWeek">Last Week</option>
-                      </select>                    
+                      </select>
                     </div>
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[16px] text-right mq450:flex-wrap">                      
+                    <div className="self-stretch flex flex-row items-start justify-start gap-[16px] text-right mq450:flex-wrap">
                       <div className="flex-1 flex flex-col items-start justify-start pt-[9px] px-0 pb-0 box-border min-w-[178px] text-left">
                         <div className="self-stretch flex flex-col items-start justify-start gap-[15px]">
                           <div className="self-stretch flex flex-col items-start justify-start gap-[1px]">
                             <div className="self-stretch h-[164px] relative">
                               <BarChart />
                             </div>
-                          </div>                         
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="self-stretch flex flex-row items-start justify-start gap-[47px] max-w-full text-base text-greyscale-900 mq750:gap-[23px] mq1050:flex-wrap">
-                  <Page/>
+                  <Page />
                   <div className="w-[359px] flex flex-col items-start justify-start pt-1 px-0 pb-0 box-border min-w-[359px] max-w-full mq450:min-w-full mq1050:flex-1">
                     <div className="self-stretch rounded-xl bg-additional-white flex flex-col items-start justify-start pt-5 px-5 pb-[15px] box-border gap-[16px] max-w-full">
                       <div className="w-[359px] h-[275px] relative rounded-xl bg-additional-white hidden max-w-full" />

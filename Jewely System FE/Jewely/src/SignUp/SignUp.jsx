@@ -1,5 +1,4 @@
 import styles from "./SignUp.model.css";
-
 const SignUp = () => {
   return (
     <div className={styles.root}>
