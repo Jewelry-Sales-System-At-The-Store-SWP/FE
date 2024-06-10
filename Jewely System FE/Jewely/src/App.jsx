@@ -33,11 +33,11 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<Dashboard />} />
         <Route path='/add-promotion' element={<AddPromotion />} />
-        <Route path='/edit-promotion' element={<EditPromotion />} />
+        <Route path='/edit-promotion/:id' element={<EditPromotion />} />
         <Route path='/add-customer' element={<AddCustomer />} />
-        <Route path='/edit-customer' element={<EditCustomer />} />
+        <Route path='/edit-customer/:id' element={<EditCustomer />} />
         <Route path='/add-jewelry' element={<AddJewelry />} />
-        <Route path='/edit-jewelry' element={<EditJewelry />} />
+        <Route path='/edit-jewelry/:id' element={<EditJewelry />} />
       </Routes>
     </div>
   </Router>

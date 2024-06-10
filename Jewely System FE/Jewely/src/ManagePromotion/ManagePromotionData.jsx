@@ -22,8 +22,8 @@ const PromotionDataTable = () => {
   const handleClick = () => {
     navigate("/add-promotion");
   };
-  const edit = () => {
-    navigate("/edit-promotion");
+  const edit = (id) => {
+    navigate(`/edit-promotion/${id}`);
   };
   const handleDelete = (promotionId) => {
     Swal.fire({
@@ -107,7 +107,7 @@ const PromotionDataTable = () => {
                 : "Ngày không xác định"}
             </div>
             <button
-              onClick={edit}
+              onClick={() => edit(item.promotionId)}
               className=" bg-[#15c09861] text-[#008667] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
             >
               Edit
