@@ -4,12 +4,17 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 
 
+
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  const navigateToSignUp = () => {
+    useNavigate("/signup");
+  }
 
   const handleLoginGoogle = (credentialResponse) => {
     console.log(credentialResponse);
@@ -104,7 +109,7 @@ const Login = () => {
               <div className="have-an-account-login1">
                 <div className="already-have-an-container">
                   <span className="dont-have-an">{`Don’t have an account? `}</span>
-                  <span className="sign-up1">{`Sign up  `}</span>
+                  <span onClick={navigateToSignUp} className="sign-up1">{`Sign up  `}</span>
                 </div>
               </div>
             </div>
