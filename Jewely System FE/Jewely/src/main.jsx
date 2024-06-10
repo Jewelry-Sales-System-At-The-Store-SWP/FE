@@ -1,12 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import React from "react";
+import { createRoot } from 'react-dom/client';
+import App from "./App.jsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-
-// write a function to reverse a input string
-
+    <GoogleOAuthProvider clientId="327719927064-isqrtstnfc63k8uaa1qiebm9iji555n7.apps.googleusercontent.com">
+      <App />
+    </GoogleOAuthProvider>
+  </React.StrictMode>
+);
