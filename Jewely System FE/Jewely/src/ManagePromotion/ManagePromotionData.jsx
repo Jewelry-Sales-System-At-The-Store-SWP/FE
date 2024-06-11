@@ -158,9 +158,12 @@ const PromotionDataTable = () => {
       </div>
       <div className="absolute ml-75 top-[37.3px] left-[591.1px] rounded-[6.25px] bg-ghostwhite-200 w-[229.8px] h-[34.6px] z-[1] text-5xs-5 text-silver">
         <div className="absolute top-[0px] left-[0px] rounded-[6.25px] bg-ghostwhite-100 w-full h-full hidden" />
-        <div className="absolute top-[12.2px] left-[41.7px] tracking-[-0.01em] inline-block w-[44.5px] h-[13.9px] z-[1]">
-          Search
-        </div>
+        <input
+          type="text"
+          className="absolute top-[12.2px] left-[41.7px] tracking-[-0.01em] inline-block w-[150px] h-[13.9px] z-[1] border-none outline-none bg-transparent text-black placeholder-black"
+          placeholder="Search"
+        />
+
         <img
           className="absolute top-[9.2px] left-[8.9px] w-[20.9px] h-[16.3px] overflow-hidden z-[1]"
           loading="lazy"
