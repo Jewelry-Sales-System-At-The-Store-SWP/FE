@@ -1,5 +1,5 @@
-import { Navbar } from "react-bootstrap";
-import JewelleryDataTable from "../ManageJewely/ManageJewelyData";
+// import { Navbar } from "react-bootstrap";
+// import JewelleryDataTable from "../ManageJewely/ManageJewelyData";
 import Sidebar from "../Navbar/Navbar";
 import CustomerDataTable from "./ManageCustomerData";
 const ManageCustomer = () => {

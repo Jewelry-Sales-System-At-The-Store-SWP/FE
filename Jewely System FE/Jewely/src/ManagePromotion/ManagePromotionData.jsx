@@ -1,5 +1,5 @@
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./ManagePromotion.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,12 @@ const PromotionDataTable = () => {
   const [data, setPromotion] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get("http://localhost:5188/api/Promotion/GetPromotions")
+      // axios.get('https://666427ef932baf9032aa2d16.mockapi.io/Promotions')
       .then((response) => {
         setPromotion(response.data);
       })
@@ -23,14 +25,12 @@ const PromotionDataTable = () => {
       });
   }, []);
 
-  const navigate = useNavigate();
-
   const handleClick = () => {
     navigate("/add-promotion");
   };
 
-  const edit = () => {
-    navigate("/edit-promotion");
+  const edit = (id) => {
+    navigate(`/edit-promotion/${id}`);
   };
 
   const handleDelete = (promotionId) => {
@@ -124,7 +124,7 @@ const PromotionDataTable = () => {
                 : "Ngày không xác định"}
             </div>
             <button
-              onClick={edit}
+              onClick={() => edit(item.promotionId)}
               className=" bg-[#15c09861] text-[#008667] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
             >
               Edit
@@ -140,11 +140,10 @@ const PromotionDataTable = () => {
       </div>
       <div className="header-data">
         <div className="absolute top-[138.1px] left-[14px] box-border w-[1036.9px] h-[0.6px] z-[1] border-t-[0.6px] border-solid border-whitesmoke-200" />
-
-        <div className="absolute top-[110.4px] left-[54.7px] tracking-[-0.01em] font-medium text-silver inline-block w-[123.3px] h-[16.4px] shrink-0 [debug_commit:1de1738] z-[1]">
+        <div className="absolute top-[110.4px] left-[54.7px] tracking-[-0.01em] font-medium text-silver inline-block w-[123.3px] h-[16.4px] shrink-0 z-[1]">
           Name
         </div>
-        <div className="absolute top-[110.6px] left-[216px] tracking-[-0.01em] font-medium text-silver inline-block w-[93.5px] h-[16.3px] shrink-0 [debug_commit:1de1738] z-[1]">
+        <div className="absolute top-[110.6px] left-[216px] tracking-[-0.01em] font-medium text-silver inline-block w-[93.5px] h-[16.3px] shrink-0 z-[1]">
           ID
         </div>
         <div className="absolute top-[110.4px] left-[379px] tracking-[-0.01em] font-medium text-silver inline-block w-[111.3px] h-[16.4px] z-[1]">

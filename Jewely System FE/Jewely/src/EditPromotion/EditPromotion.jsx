@@ -15,9 +15,9 @@ const EditPromotion = () => {
     endDate: new Date(),
   });
 
-  useEffect((promotionId) => {
+  useEffect(() => {
     axios
-      .get(`http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`)
+      .get(`http://localhost:5188/api/Promotion/GetPromotionById?id=${id}`)
       .then((response) => {
         const data = response.data;
         setPromotionData({
@@ -57,7 +57,15 @@ const EditPromotion = () => {
           text: "Promotion updated successfully!",
           icon: "success",
         }).then(() => {
-          navigate("/manage-promotion");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            navigate("/manage-promotion");
+          });
         });
       })
       .catch((error) => {
@@ -105,7 +113,7 @@ const EditPromotion = () => {
                   value={promotionData.description}
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                  placeholder=""
+                  placeholder={promotionData.discountRate}
                   type="text"
                 />
               </div>
@@ -116,7 +124,11 @@ const EditPromotion = () => {
                     value={promotionData.discountRate}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder=""
+                    placeholder={
+                      promotionData.discountRate
+                        ? `${promotionData.discountRate}%`
+                        : "Enter Discount Rate"
+                    }
                     type="text"
                   />
                 </div>
@@ -126,7 +138,7 @@ const EditPromotion = () => {
                 selected={promotionData.startDate}
                 onChange={(date) => handleDateChange("startDate", date)}
                 className="px-4 w-full border border-gray-300 rounded p-1 text-xs"
-                placeholderText=""
+                placeholder={promotionData.startDate}
                 placeholderClassName="text-center"
               />
               <DatePicker
@@ -134,7 +146,7 @@ const EditPromotion = () => {
                 selected={promotionData.endDate}
                 onChange={(date) => handleDateChange("endDate", date)}
                 className="px-4 w-full border border-gray-300 rounded p-1 text-xs mt-3"
-                placeholderText=""
+                placeholder={promotionData.endDate}
                 placeholderClassName="text-center"
               />
             </div>

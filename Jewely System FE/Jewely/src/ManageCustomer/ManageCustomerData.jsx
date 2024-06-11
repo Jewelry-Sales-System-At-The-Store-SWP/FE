@@ -43,7 +43,9 @@ const CustomerDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`)
+          .delete(
+            `http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`
+          )
           .then(() => {
             Swal.fire({
               title: "Deleted!",

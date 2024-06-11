@@ -1,10 +1,10 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-import "../ManagePromotion/ManagePromotion.css"
+import "../ManagePromotion/ManagePromotion.css";
 import ReactPaginate from "react-paginate";
 
 const JewelleryDataTable = () => {
@@ -25,7 +25,9 @@ const JewelleryDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5188/api/Promotion/DeletePromotion?id=${jewelryId}`)
+          .delete(
+            `http://localhost:5188/api/Promotion/DeletePromotion?id=${jewelryId}`
+          )
           .then(() => {
             Swal.fire({
               title: "Deleted!",
@@ -108,10 +110,16 @@ const JewelleryDataTable = () => {
             <div className="absolute left-[746.3px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10">
               {item.stoneCost * 1000} VnD
             </div>
-            <button onClick={() => navigate("/edit-jewelry")} className=" text-[#008667] bg-[#15c09861] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10">
+            <button
+              onClick={() => navigate(`/edit-jewelry/${item.jewelryId}`)}
+              className="text-[#008667] bg-[#15c09861] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
+            >
               Edit
             </button>
-            <button onClick={() => handleDelete(item.jewelryId)} className="absolute left-[1033px] rounded-md bg-firebrick-200 box-border w-[29px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10">
+            <button
+              onClick={() => handleDelete(item.jewelryId)}
+              className="absolute left-[1033px] rounded-md bg-firebrick-200 box-border w-[29px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10"
+            >
               X
             </button>
           </div>
@@ -161,6 +169,7 @@ const JewelleryDataTable = () => {
         <select className="custom-select form-select form-select-lg">
           <option>ALL</option>
           <option>Diamond Ring</option>
+          <option>Gold Necklace</option>
         </select>
       </form>
       <ReactPaginate
