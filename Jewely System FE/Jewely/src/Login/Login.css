@@ -322,7 +322,21 @@ body {
   overflow: hidden;
   flex-direction: row;
   justify-content: center;
-  opacity: 0.25;
+  background-color: black;
+}
+
+.sign-up-button {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  background-color: black;
+  cursor: pointer;
+  border: 0;
+  padding: 15px var(--padding-xl) var(--padding-base);
+  border-radius: 32px;
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: center;
 }
 .terms-and-signup {
   flex-direction: column;
@@ -359,7 +373,7 @@ body {
 }
 .sign-up1 {
   text-decoration: underline;
-  font-weight: 500;
+  font-weight: 550;
   color: var(--color-gray);
   white-space: pre-wrap;
 }
@@ -442,9 +456,15 @@ body {
   width: 32px;
   height: 32px;
   position: relative;
-  border-radius: 50%; 
+  border-radius: 50%;
 }
 
+.description {
+  position: absolute;
+  color: gray;
+  font-size: 12px;
+  top: 270px;
+}
 
 .social-media-logo-wrapper {
   display: flex;

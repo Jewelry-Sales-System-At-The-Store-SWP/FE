@@ -17,7 +17,7 @@ import EditCustomer from "./EditCustomer/EditCustomer";
 import AddJewelry from "./AddJewelry/AddJewelry";
 import EditJewelry from "./EditJewelry/EditJewelry";
 import Login from "./Login/Login";
-// import SignUp from "./SignUp/SignUp";
+import SignUp from "./SignUp/SignUp";
 
 
 export default function App() {
@@ -46,7 +46,7 @@ export default function App() {
           <Route path="/edit-customer" element={<EditCustomer />} />
           <Route path="/add-jewelry" element={<AddJewelry />} />
           <Route path="/edit-jewelry" element={<EditJewelry />} />
-          {/* <Route path="/sign-up" element={<SignUp />} /> */}
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
     </Router>

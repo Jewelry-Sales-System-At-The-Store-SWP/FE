@@ -139,9 +139,10 @@ const Login = () => {
                 <div className="already-have-an-container">
                   <span className="dont-have-an">{`Don’t have an account? `}</span>
                   <span
+                    style={{ cursor: "pointer" }}
                     onClick={navigateToSignUp}
                     className="sign-up1"
-                  >{`Sign up  `}</span>
+                  >{`Sign up`}</span>
                 </div>
               </div>
             </div>
