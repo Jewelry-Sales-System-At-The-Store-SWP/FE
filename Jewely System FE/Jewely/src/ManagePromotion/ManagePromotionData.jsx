@@ -101,13 +101,13 @@ const PromotionDataTable = () => {
         {currentPageData.map((item, index) => (
           <div
             key={item.promotionId}
-            className="data absolute w-full left-0"
+            className="data absolute w-full left-0 ml-2"
             style={{ top: `${160 + index * 100}px` }}
           >
-            <div className="absolute left-[48px] font-medium text-black inline-block w-[122.8px] h-4 z-10">
+            <div className="absolute left-[35px] font-medium text-black inline-block w-[122.8px] h-4 z-10">
               {item.description}
             </div>
-            <div className="absolute left-[203px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10">
+            <div className="absolute left-[180px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10">
               {item.promotionId}
             </div>
             <div className="absolute left-[379px] ml-6  font-medium inline-block w-[114.8px] h-[16.4px] z-10">

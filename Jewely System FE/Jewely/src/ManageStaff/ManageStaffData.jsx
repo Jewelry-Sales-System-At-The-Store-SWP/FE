@@ -3,13 +3,16 @@ import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./ManageStaff.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
 const StaffDataTable = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
 
   useEffect(() => {
     axios
-      .get("http://localhost:5188/api/User")
+      .get("http://localhost:5188/api/User/GetUsers")
       .then((response) => {
         setData(response.data);
         console.log(response.data);
@@ -18,7 +21,17 @@ const StaffDataTable = () => {
         console.error("Error fetching promotion details:", error);
       });
   }, []);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(data.length / itemsPerPage);
+
   return (
+    
     <main className="main">
       <section className="absolute top-[89px] left-[357px] shadow-[0px_10px_60px_rgba(226,_236,_249,_0.5)] rounded-11xl bg-white w-[968px] flex flex-row items-start justify-between pt-8 pb-[25px] pr-[74px] pl-[50px] box-border gap-[20px] max-w-full text-left text-sm text-darkgray font-poppins mq700:flex-wrap">
         <img
@@ -83,20 +96,18 @@ const StaffDataTable = () => {
               {data && (
                 <table className="absolute w-[813px] h-[19px] top-[100px] left-[25px]">
                   <tbody>
-                    {data.map((item, index) => {
-                      return (
-                        <tr key={index} className="staff-table">
-                          <td className="staff-name">{item.username}</td>
-                          <td className="staff-counter">{item.counter}</td>
-                          <td className="staff-phone">1</td>
-                          <td className="staff-mail">{item.email}</td>
-                          <td className="staff-revenue">1</td>
-                          <td>
-                            <button className="btn-more-info">Active</button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {currentPageData.map((item, index) => (
+                      <tr key={index} className="staff-table">
+                        <td className="staff-name">{item.username}</td>
+                        <td className="staff-counter">{item.counter}</td>
+                        <td className="staff-phone">1</td>
+                        <td className="staff-mail">{item.email}</td>
+                        <td className="staff-revenue">1</td>
+                        <td>
+                          <button className="btn-more-info">Active</button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               )}
@@ -168,6 +179,19 @@ const StaffDataTable = () => {
           </div>
         </form>
       </section>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination-staff"}
+        subContainerClassName={"pages pagination-staff"}
+        activeClassName={"active"}
+      />
     </main>
   );
 };
