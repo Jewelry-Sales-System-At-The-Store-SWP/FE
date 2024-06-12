@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
 const AddCustomer = () => {
   const navigate = useNavigate();
   const [customerData, setCustomerData] = useState({
@@ -11,6 +10,7 @@ const AddCustomer = () => {
     phone: "",
     address: "",
     point: "",
+    mail: "",
   });
 
   const handleChange = (e) => {
@@ -23,61 +23,66 @@ const AddCustomer = () => {
   };
 
   const save = () => {
-    const discountRate = parseFloat(customerData.discountRate);
-    const startDate = new Date(customerData.startDate);
-    const endDate = new Date(customerData.endDate);
+    const point = parseInt(customerData.point);
 
-    if (!customerData.description.trim()) {
+    if (!customerData.name.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Description must not be empty!",
+        text: "Name must not be empty!",
         icon: "error",
       });
       return;
     }
 
-    if (
-      isNaN(discountRate) ||
-      discountRate < 0 ||
-      discountRate > 100 ||
-      discountRate === ""
-    ) {
+    if (!customerData.mail.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Discount Rate must be a valid number and from 0 to 100 and must not be leave empty!",
+        text: "Mail must not be empty!",
         icon: "error",
       });
       return;
     }
 
-    if (
-      isNaN(startDate.getTime()) ||
-      isNaN(endDate.getTime()) ||
-      startDate.getTime() > endDate.getTime() ||
-      startDate.getTime === null ||
-      endDate.getTime === null
-    ) {
+    if (!customerData.address.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Start Date and End Date must be valid dates.",
+        text: "Name must not be empty!",
         icon: "error",
       });
       return;
     }
+
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    if (!customerData.phone.trim() || !phoneRegex.test(customerData.phone)) {
+      Swal.fire({
+        title: "Error!",
+        text: "Phone number must be in the format xxx-xxx-xxxx (x stands for digit) and not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (isNaN(point) || point < 0 || point === "") {
+      Swal.fire({
+        title: "Error!",
+        text: "Point must be a valid number and must not be leave empty!",
+        icon: "error",
+      });
+      return;
+    }
+
     const dataToSend = {
       ...customerData,
-      discountRate: discountRate,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
     };
 
     axios
-      .post("http://localhost:5188/api/Promotion/AddNewCustomer", dataToSend)
+      // .post("http://localhost:5188/api/Promotion/AddNewCustomer", dataToSend)
+      .post(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/`, dataToSend)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           Swal.fire({
             title: "Add Success!",
-            text: "Add promotion successfully!",
+            text: "Add Customer successfully!",
             icon: "success",
           })
             .then(() => {
@@ -90,12 +95,12 @@ const AddCustomer = () => {
               });
             })
             .then(() => {
-              navigate("/manage-promotion");
+              navigate("/manage-custom");
             });
         } else {
           Swal.fire({
             title: "Error!",
-            text: "Failed to add promotion.",
+            text: "Failed to add customer.",
             icon: "error",
           });
         }
@@ -103,7 +108,7 @@ const AddCustomer = () => {
       .catch((error) => {
         Swal.fire({
           title: "Error!",
-          text: "Failed to add promotion.",
+          text: "Failed to add customer.",
           icon: "error",
         });
       });
@@ -146,7 +151,7 @@ const AddCustomer = () => {
             <div className="flex-1 flex flex-col items-start justify-start gap-[24px] min-w-[130px]">
               <div className="mb-2 self-stretch rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                 <input
-                  name="description"
+                  name="name"
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                   placeholder=""
@@ -157,19 +162,7 @@ const AddCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={customerData.point}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder=""
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
-                    name="discountRate"
+                    name="address"
                     value={customerData.address}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
@@ -181,8 +174,20 @@ const AddCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
+                    name="phone"
                     value={customerData.phone}
+                    onChange={handleChange}
+                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
+                    placeholder=""
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
+                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
+                  <input
+                    name="mail"
+                    value={customerData.mail}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -193,7 +198,7 @@ const AddCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px] mt-2">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
+                    name="point"
                     value={customerData.point}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"

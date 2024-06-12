@@ -2,55 +2,101 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const EditCustomer = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [promotionData, setPromotionData] = useState({
-    description: "",
-    discountRate: "",
-    startDate: new Date(),
-    endDate: new Date(),
+  const [customerData, setCustomerData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    point: "",
+    mail: "",
   });
-  
-  useEffect(
-    (promotionId) => {
-      axios
-        .get(
-          `http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`
-        )
-        .then((response) => {
-          const data = response.data;
-          setPromotionData({
-            ...data,
-            startDate: new Date(data.startDate),
-            endDate: new Date(data.endDate),
-          });
-        })
-        .catch((error) => {
-          console.error("Error fetching promotion data:", error);
+
+  useEffect(() => {
+    axios
+      // .get(
+      //   `http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`
+      // )
+      .get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${id}`)
+      .then((response) => {
+        const data = response.data;
+        setCustomerData({
+          ...data,
         });
-    },
-    [id]
-  );
+      })
+      .catch((error) => {
+        console.error("Error fetching customer data:", error);
+      });
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPromotionData({ ...promotionData, [name]: value });
+    setCustomerData({ ...customerData, [name]: value });
   };
-  
+
   const cancel = () => {
     navigate("/manage-custom");
   };
 
   const save = () => {
+    const point = parseInt(customerData.point);
+
+    if (!customerData.name.trim()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Name must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (!customerData.mail.trim()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Mail must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (!customerData.address.trim()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Name must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    if (!customerData.phone.trim() || !phoneRegex.test(customerData.phone)) {
+      Swal.fire({
+        title: "Error!",
+        text: "Phone number must be in the format xxx-xxx-xxxx (x stands for digit) and not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (isNaN(point) || point < 0 || point === "") {
+      Swal.fire({
+        title: "Error!",
+        text: "Point must be a valid number and must not be leave empty!",
+        icon: "error",
+      });
+      return;
+    }
     // Update the promotion data on the server
     axios
+      // .put(
+      //   `http://localhost:5188/api/Promotion/UpdatePromotion?id=${id}`,
+      //   promotionData
+      // )
       .put(
-        `http://localhost:5188/api/Promotion/UpdatePromotion?id=${id}`,
-        promotionData
+        `https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${id}`,
+        customerData
       )
       .then((response) => {
         Swal.fire({
@@ -105,8 +151,8 @@ const EditCustomer = () => {
             <div className="flex-1 flex flex-col items-start justify-start gap-[24px] min-w-[130px]">
               <div className="mb-2 self-stretch rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                 <input
-                  name="description"
-                  value={promotionData.description}
+                  name="name"
+                  value={customerData.name}
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                   placeholder=""
@@ -116,8 +162,8 @@ const EditCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="address"
+                    value={customerData.address}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -128,8 +174,8 @@ const EditCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="phone"
+                    value={customerData.phone}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -140,8 +186,8 @@ const EditCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="mail"
+                    value={customerData.mail}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -152,8 +198,8 @@ const EditCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px] mt-2">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="point"
+                    value={customerData.point}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""

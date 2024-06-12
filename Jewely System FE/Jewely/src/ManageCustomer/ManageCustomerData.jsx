@@ -14,7 +14,8 @@ const CustomerDataTable = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5188/api/Customer")
+      // .get("http://localhost:5188/api/Customer")
+      .get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer`)
       .then((response) => {
         setCustomer(response.data);
       })
@@ -43,9 +44,10 @@ const CustomerDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(
-            `http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`
-          )
+          // .delete(
+          //   `http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`
+          // )
+          .delete(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${customerId}`)
           .then(() => {
             Swal.fire({
               title: "Deleted!",
@@ -60,7 +62,7 @@ const CustomerDataTable = () => {
                 timer: 1500,
               });
             });
-            setCustomer(data.filter((item) => item.customerId !== customerId));
+            setCustomer(data.filter((item) => item.id !== customerId));
           })
           .catch((error) => {
             console.error("There was an error deleting the customer:", error);
@@ -96,7 +98,7 @@ const CustomerDataTable = () => {
       <div className="relative z-10">
         {currentPageData.map((item, index) => (
           <div
-            key={item.customerId}
+            key={item.id}
             className="data absolute w-full left-0"
             style={{ top: `${160 + index * 100}px` }}
           >
@@ -112,17 +114,17 @@ const CustomerDataTable = () => {
             <div className="absolute left-[546px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10">
               {item.mail}
             </div>
-            <div className="absolute left-[746.3px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10">
+            <div className="absolute left-[760.3px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10">
               {item.point}
             </div>
             <button
-              onClick={() => edit(item.customerId)}
+              onClick={() => edit(item.id)}
               className=" bg-[#15c09861] text-[#008667] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
             >
               Edit
             </button>
             <button
-              onClick={() => handleDelete(item.customerId)}
+              onClick={() => handleDelete(item.id)}
               className="absolute left-[1033px] rounded-md bg-firebrick-200 box-border w-[29px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10"
             >
               X
