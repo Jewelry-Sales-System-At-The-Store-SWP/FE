@@ -35,24 +35,6 @@ const AddStaff = () => {
       return;
     }
 
-    if (staffData.counter === "") {
-      Swal.fire({
-        title: "Error!",
-        text: "Counter must not be empty!",
-        icon: "error",
-      });
-      return;
-    }
-
-    if (staffData.phone === "") {
-      Swal.fire({
-        title: "Error!",
-        text: "Phone Number must not be empty!",
-        icon: "error",
-      });
-      return;
-    }
-
     if (staffData.email === "") {
       Swal.fire({
         title: "Error!",
@@ -62,25 +44,25 @@ const AddStaff = () => {
       return;
     }
 
-    if (isNaN(revenue)) {
+    if (isNaN(revenue) || staffData.revenue < 0 || staffData.revenue === "") {
       Swal.fire({
         title: "Error!",
-        text: "Revenue must be a valid number!",
+        text: "Revenue must be a valid number and cannot be leave empty!",
         icon: "error",
       });
       return;
     }
 
-    if (isNaN(counter) || !Number.isInteger(counter)) {
+    if (isNaN(counter) || !Number.isInteger(counter) || staffData.counter < 0 || staffData.counter === "") {
       Swal.fire({
         title: "Error!",
-        text: "Checkout Counter must be a valid integer!",
+        text: "Checkout Counter must be a valid integer and cannot be leave empty!",
         icon: "error",
       });
       return;
     }
 
-    if (staffData.phone === "null" || isNaN(staffData.phone)) {
+    if (staffData.phone === "" || isNaN(staffData.phone) || staffData.phone < 0) {
       Swal.fire({
         title: "Error!",
         text: "Phone Number must be a valid sequence of numbers and must not be empty!",

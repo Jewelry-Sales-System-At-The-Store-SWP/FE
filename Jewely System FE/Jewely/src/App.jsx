@@ -20,7 +20,6 @@ import SignUp from "./SignUp/SignUp";
 import AddStaff from "./AddStaff/AddStaff";
 import EditStaff from "./EditStaff/EditStaff";
 
-
 export default function App() {
   return (
     <Router>
@@ -42,11 +41,11 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/add-promotion" element={<AddPromotion />} />
-          <Route path='/edit-promotion/:id' element={<EditPromotion />} />
+          <Route path="/edit-promotion/:id" element={<EditPromotion />} />
           <Route path="/add-customer" element={<AddCustomer />} />
-          <Route path='/edit-customer/:id' element={<EditCustomer />} />
+          <Route path="/edit-customer/:id" element={<EditCustomer />} />
           <Route path="/add-jewelry" element={<AddJewelry />} />
-          <Route path='/edit-jewelry/:id' element={<EditJewelry />} />
+          <Route path="/edit-jewelry/:id" element={<EditJewelry />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/add-staff" element={<AddStaff />} />
           <Route path="/edit-staff/:id" element={<EditStaff />} />

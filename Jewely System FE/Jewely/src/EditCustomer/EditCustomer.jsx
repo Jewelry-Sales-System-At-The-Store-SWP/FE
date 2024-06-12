@@ -14,32 +14,33 @@ const EditCustomer = () => {
     startDate: new Date(),
     endDate: new Date(),
   });
-
-  useEffect((promotionId) => {
-    axios
-      .get(`http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`)
-      .then((response) => {
-        const data = response.data;
-        setPromotionData({
-          ...data,
-          startDate: new Date(data.startDate),
-          endDate: new Date(data.endDate),
+  
+  useEffect(
+    (promotionId) => {
+      axios
+        .get(
+          `http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`
+        )
+        .then((response) => {
+          const data = response.data;
+          setPromotionData({
+            ...data,
+            startDate: new Date(data.startDate),
+            endDate: new Date(data.endDate),
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching promotion data:", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error fetching promotion data:", error);
-      });
-  }, [id]);
+    },
+    [id]
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPromotionData({ ...promotionData, [name]: value });
   };
-
-  const handleDateChange = (name, date) => {
-    setPromotionData({ ...promotionData, [name]: date });
-  };
-
+  
   const cancel = () => {
     navigate("/manage-custom");
   };
@@ -160,7 +161,6 @@ const EditCustomer = () => {
                   />
                 </div>
               </div>
-             
             </div>
           </div>
         </div>

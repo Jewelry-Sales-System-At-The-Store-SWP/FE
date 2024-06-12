@@ -38,10 +38,12 @@ const EditStaff = () => {
   };
 
   const save = () => {
-    if (!/^\d+$/.test(staffData.phone)) {
+    const counter = parseInt(staffData.counter, 10);
+    const revenue = parseFloat(staffData.revenue);
+    if (staffData.username === "") {
       Swal.fire({
         title: "Error!",
-        text: "Phone Number must be a sequence of numbers!",
+        text: "Username must not be empty!",
         icon: "error",
       });
       return;
@@ -56,49 +58,37 @@ const EditStaff = () => {
       return;
     }
 
-    if (staffData.phone === "") {
+    if (isNaN(revenue) || staffData.revenue < 0 || staffData.revenue === "") {
       Swal.fire({
         title: "Error!",
-        text: "Phone must not be empty!",
+        text: "Revenue must be a valid number and cannot be leave empty!",
         icon: "error",
       });
       return;
     }
 
-    if (staffData.username === "") {
+    if (
+      isNaN(counter) ||
+      !Number.isInteger(counter) ||
+      staffData.counter < 0 ||
+      staffData.counter === ""
+    ) {
       Swal.fire({
         title: "Error!",
-        text: "Name must not be empty!",
+        text: "Checkout Counter must be a valid integer and cannot be leave empty!",
         icon: "error",
       });
       return;
     }
 
-    if (staffData.counter === "") {
+    if (
+      staffData.phone === "" ||
+      isNaN(staffData.phone) ||
+      staffData.phone < 0
+    ) {
       Swal.fire({
         title: "Error!",
-        text: "Counter must not be empty!",
-        icon: "error",
-      });
-      return;
-    }
-
-    if (staffData.revenue === "") {
-        Swal.fire({
-          title: "Error!",
-          text: "Revenue must not be empty!",
-          icon: "error",
-        });
-        return;
-      }
-
-    
-
-    const counter = parseInt(staffData.counter, 10);
-    if (isNaN(counter) || !Number.isInteger(counter)) {
-      Swal.fire({
-        title: "Error!",
-        text: "Checkout Counter must be a valid integer!",
+        text: "Phone Number must be a valid sequence of numbers and must not be empty!",
         icon: "error",
       });
       return;

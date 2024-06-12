@@ -2,35 +2,32 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
 const EditJewelry = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [promotionData, setPromotionData] = useState({
-    description: "",
-    discountRate: "",
-    startDate: new Date(),
-    endDate: new Date(),
+  const [jewelleryData, setJewelleryData] = useState({
+    name: "",
+    barcode: "",
+    weight: "",
+    stonecost: "",
+    // laborcost: "",
   });
 
   useEffect(
-    (promotionId) => {
+    () => {
       axios
-        .get(
-          `http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`
-        )
+        // .get(
+        //   `http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`
+        // )
+        .get(`https://666427ef932baf9032aa2d16.mockapi.io/Jewely/${id}`)
         .then((response) => {
           const data = response.data;
-          setPromotionData({
+          setJewelleryData({
             ...data,
-            startDate: new Date(data.startDate),
-            endDate: new Date(data.endDate),
           });
         })
         .catch((error) => {
-          console.error("Error fetching promotion data:", error);
+          console.error("Error fetching jewellery data:", error);
         });
     },
     [id]
@@ -38,11 +35,7 @@ const EditJewelry = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPromotionData({ ...promotionData, [name]: value });
-  };
-
-  const handleDateChange = (name, date) => {
-    setPromotionData({ ...promotionData, [name]: date });
+    setJewelleryData({ ...jewelleryData, [name]: value });
   };
 
   const cancel = () => {
@@ -50,26 +43,78 @@ const EditJewelry = () => {
   };
 
   const save = () => {
+    const weight = parseFloat(jewelleryData.weight);
+    const stone = parseFloat(jewelleryData.stonecost);
+    // const labor = parseFloat(jewelleryData.laborcost);
+
+    if (isNaN(weight) || weight < 0 || weight === "") {
+      Swal.fire({
+        title: "Error!",
+        text: "Weight must be a valid number and must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (isNaN(stone) || stone < 0 || stone === "") {
+      Swal.fire({
+        title: "Error!",
+        text: "Stone Cost must be a valid number and must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    // if (isNaN(labor) || labor < 0 || labor === "") {
+    //   Swal.fire({
+    //     title: "Error!",
+    //     text: "Labor Cost must be a valid number and must not be empty!",
+    //     icon: "error",
+    //   });
+    //   return;
+    // }
+
+    if (!jewelleryData.name.trim()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Name must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (!jewelleryData.barcode.trim()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Barcode must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
     // Update the promotion data on the server
     axios
+      // .put(
+      //   `http://localhost:5188/api/Promotion/UpdatePromotion?id=${id}`,
+      //   promotionData
+      // )
       .put(
-        `http://localhost:5188/api/Promotion/UpdatePromotion?id=${id}`,
-        promotionData
+        `https://666427ef932baf9032aa2d16.mockapi.io/Jewely/${id}`,
+        jewelleryData
       )
       .then((response) => {
         Swal.fire({
           title: "Success!",
-          text: "Promotion updated successfully!",
+          text: "Jewellery updated successfully!",
           icon: "success",
         }).then(() => {
-          navigate("/manage-promotion");
+          navigate("/manage-jewelry");
         });
       })
       .catch((error) => {
-        console.error("Error updating promotion:", error);
+        console.error("Error updating jewelry:", error);
         Swal.fire({
           title: "Error!",
-          text: "Failed to update promotion.",
+          text: "Failed to update jewelry.",
           icon: "error",
         });
       });
@@ -100,17 +145,17 @@ const EditJewelry = () => {
                   <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
                     Stone Cost
                   </b>
-                  <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
+                  {/* <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
                     Labor Cost
-                  </b>
+                  </b> */}
                 </div>
               </div>
             </div>
             <div className="flex-1 flex flex-col items-start justify-start gap-[24px] min-w-[130px]">
               <div className="mb-2 self-stretch rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                 <input
-                  name="description"
-                  value={promotionData.description}
+                  name="name"
+                  value={jewelleryData.name}
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                   placeholder=""
@@ -120,8 +165,8 @@ const EditJewelry = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="barcode"
+                    value={jewelleryData.barcode}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -132,8 +177,8 @@ const EditJewelry = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="weight"
+                    value={jewelleryData.weight}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -144,8 +189,8 @@ const EditJewelry = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="stonecost"
+                    value={jewelleryData.stonecost}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
@@ -153,18 +198,18 @@ const EditJewelry = () => {
                   />
                 </div>
               </div>
-              <div className="mt-2 self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
+              {/* <div className="mt-2 self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="discountRate"
-                    value={promotionData.discountRate}
+                    name="laborcost"
+                    value={jewelleryData.laborcost}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
                     placeholder=""
                     type="text"
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

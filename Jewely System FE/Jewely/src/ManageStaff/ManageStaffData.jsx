@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const StaffDataTable = () => {
   const [data, setStaff] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 6;
   const navigate = useNavigate();
   const navigateToAddStaff = () => {
     navigate("/add-staff");
@@ -24,35 +24,35 @@ const StaffDataTable = () => {
     (staff) => staff.status === "online"
   ).length;
   const totalStaffCount = data.length;
-  useEffect(() => {
-    axios
-      .get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
-      .then((response) => {
-        // Adjust the status property to always be "online"
-        const modifiedData = response.data.map((staff) => ({
-          ...staff,
-          status: "online",
-        }));
-        setStaff(modifiedData);
-        console.log(modifiedData);
-      })
-      .catch((error) => {
-        console.error("Error fetching user details:", error);
-      });
-  }, []);
-
   // useEffect(() => {
   //   axios
-  //     // .get("http://localhost:5188/api/User/GetUsers")
   //     .get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
   //     .then((response) => {
-  //       setStaff(response.data);
-  //       console.log(response.data);
+  //       // Adjust the status property to always be "online"
+  //       const modifiedData = response.data.map((staff) => ({
+  //         ...staff,
+  //         status: "online",
+  //       }));
+  //       setStaff(modifiedData);
+  //       console.log(modifiedData);
   //     })
   //     .catch((error) => {
   //       console.error("Error fetching user details:", error);
   //     });
   // }, []);
+
+  useEffect(() => {
+    axios
+      // .get("http://localhost:5188/api/User/GetUsers")
+      .get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
+      .then((response) => {
+        setStaff(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user details:", error);
+      });
+  }, []);
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);

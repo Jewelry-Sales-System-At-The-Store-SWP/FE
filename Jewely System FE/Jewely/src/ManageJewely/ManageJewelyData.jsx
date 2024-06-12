@@ -13,7 +13,7 @@ const JewelleryDataTable = () => {
   const itemsPerPage = 6;
   const navigate = useNavigate();
 
-  const handleDelete = (jewelryId) => {
+  const handleDelete = (jewelleryId) => {
     Swal.fire({
       title: "Are you sure that you want to delete this jewelry?",
       text: "You won't be able to revert this!",
@@ -25,9 +25,10 @@ const JewelleryDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(
-            `http://localhost:5188/api/Promotion/DeletePromotion?id=${jewelryId}`
-          )
+          // .delete(
+          //   `http://localhost:5188/api/Promotion/DeletePromotion?id=${jewelryId}`
+          // )
+          .delete(`https://666427ef932baf9032aa2d16.mockapi.io/Jewely/${jewelleryId}`)
           .then(() => {
             Swal.fire({
               title: "Deleted!",
@@ -43,14 +44,14 @@ const JewelleryDataTable = () => {
               });
             });
             setJewellery(
-              jewellery.filter((item) => item.jewelryId !== jewelryId)
+              jewellery.filter((item) => item.id !== jewelleryId)
             );
           })
           .catch((error) => {
             console.error("There was an error deleting the promotion:", error);
             Swal.fire({
               title: "Error!",
-              text: "There was an error deleting the promotion.",
+              text: "There was an error deleting the jewelry.",
               icon: "error",
             });
           });
@@ -60,7 +61,8 @@ const JewelleryDataTable = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5188/api/Jewelry/GetJewelries")
+      // .get("http://localhost:5188/api/Jewelry/GetJewelries")
+      .get("https://666427ef932baf9032aa2d16.mockapi.io/Jewely")
       .then((response) => {
         setJewellery(response.data);
       })
@@ -91,7 +93,7 @@ const JewelleryDataTable = () => {
       <div className="relative z-10">
         {currentPageData.map((item, index) => (
           <div
-            key={item.jewelryId}
+            key={item.id}
             className="data absolute w-full left-0"
             style={{ top: `${160 + index * 100}px` }}
           >
@@ -105,19 +107,19 @@ const JewelleryDataTable = () => {
               {item.weight / 100} g
             </div>
             <div className="absolute left-[546px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10">
-              {item.basePrice * 1000} VnD
+              {item.baseprice * 1000} VnD
             </div>
             <div className="absolute left-[746.3px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10">
-              {item.stoneCost * 1000} VnD
+              {item.stonecost * 1000} VnD
             </div>
             <button
-              onClick={() => navigate(`/edit-jewelry/${item.jewelryId}`)}
+              onClick={() => navigate(`/edit-jewelry/${item.id}`)}
               className="text-[#008667] bg-[#15c09861] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
             >
               Edit
             </button>
             <button
-              onClick={() => handleDelete(item.jewelryId)}
+              onClick={() => handleDelete(item.id)}
               className="absolute left-[1033px] rounded-md bg-firebrick-200 box-border w-[29px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10"
             >
               X
