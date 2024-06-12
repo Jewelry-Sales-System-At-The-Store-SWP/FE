@@ -7,7 +7,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import "../ManagePromotion/ManagePromotion.css";
 const CustomerDataTable = () => {
-  const [data, setPromotion] = useState([]);
+  const [data, setCustomer] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const CustomerDataTable = () => {
     axios
       .get("http://localhost:5188/api/Customer")
       .then((response) => {
-        setPromotion(response.data);
+        setCustomer(response.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the promotion data:", error);
@@ -60,10 +60,10 @@ const CustomerDataTable = () => {
                 timer: 1500,
               });
             });
-            setPromotion(data.filter((item) => item.customerId !== customerId));
+            setCustomer(data.filter((item) => item.customerId !== customerId));
           })
           .catch((error) => {
-            console.error("There was an error deleting the promotion:", error);
+            console.error("There was an error deleting the customer:", error);
             Swal.fire({
               title: "Error!",
               text: "There was an error deleting the customer.",

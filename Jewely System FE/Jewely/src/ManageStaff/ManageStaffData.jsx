@@ -4,26 +4,99 @@ import "./ManageStaff.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const StaffDataTable = () => {
-  const [data, setData] = useState([]);
+  const [data, setStaff] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 5;
+  const navigate = useNavigate();
+  const navigateToAddStaff = () => {
+    navigate("/add-staff");
+  };
 
+  const navigateToEditStaff = (id) => {
+    navigate(`/edit-staff/${id}`);
+  };
+
+  const activeStaffCount = data.filter(
+    (staff) => staff.status === "online"
+  ).length;
+  const totalStaffCount = data.length;
   useEffect(() => {
     axios
-      .get("http://localhost:5188/api/User/GetUsers")
+      .get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
       .then((response) => {
-        setData(response.data);
-        console.log(response.data);
+        // Adjust the status property to always be "online"
+        const modifiedData = response.data.map((staff) => ({
+          ...staff,
+          status: "online",
+        }));
+        setStaff(modifiedData);
+        console.log(modifiedData);
       })
       .catch((error) => {
-        console.error("Error fetching promotion details:", error);
+        console.error("Error fetching user details:", error);
       });
   }, []);
 
+  // useEffect(() => {
+  //   axios
+  //     // .get("http://localhost:5188/api/User/GetUsers")
+  //     .get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
+  //     .then((response) => {
+  //       setStaff(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching user details:", error);
+  //     });
+  // }, []);
+
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
+  };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure that you want to delete this user?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://666427ef932baf9032aa2d16.mockapi.io/Staffs/${id}`)
+          .then(() => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your user has been deleted.",
+              icon: "success",
+            }).then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            });
+            setStaff(data.filter((item) => item.id !== id));
+          })
+          .catch((error) => {
+            console.error("There was an error deleting a user:", error);
+            Swal.fire({
+              title: "Error!",
+              text: "There was an error deleting a user.",
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
   const offset = currentPage * itemsPerPage;
@@ -31,7 +104,6 @@ const StaffDataTable = () => {
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
   return (
-    
     <main className="main">
       <section className="absolute top-[89px] left-[357px] shadow-[0px_10px_60px_rgba(226,_236,_249,_0.5)] rounded-11xl bg-white w-[968px] flex flex-row items-start justify-between pt-8 pb-[25px] pr-[74px] pl-[50px] box-border gap-[20px] max-w-full text-left text-sm text-darkgray font-poppins mq700:flex-wrap">
         <img
@@ -51,7 +123,7 @@ const StaffDataTable = () => {
               Total Staff
             </div>
             <b className="relative text-13xl tracking-[-0.01em] leading-[100%] font-semibold text-darkslategray-400 inline-block min-w-[32px] z-[1] mq450:text-lgi mq450:leading-[19px] mq925:text-7xl mq925:leading-[26px]">
-              10
+              {totalStaffCount}
             </b>
           </div>
         </div>
@@ -69,7 +141,7 @@ const StaffDataTable = () => {
                 Active Now
               </div>
               <b className="relative text-13xl tracking-[-0.01em] leading-[100%] font-semibold text-darkslategray-400 inline-block min-w-[22px] z-[1] mq450:text-lgi mq450:leading-[19px] mq925:text-7xl mq925:leading-[26px]">
-                4
+                {activeStaffCount}
               </b>
             </div>
           </div>
@@ -90,27 +162,100 @@ const StaffDataTable = () => {
                   All STAFF
                 </b>
                 <div className="w-[120.5px] relative text-4xs-8 tracking-[-0.01em] font-poppins text-green-500 text-left inline-block z-[1]">
-                  Active Staff
+                  Active
                 </div>
               </div>
-              {data && (
-                <table className="absolute w-[813px] h-[19px] top-[100px] left-[25px]">
-                  <tbody>
-                    {currentPageData.map((item, index) => (
-                      <tr key={index} className="staff-table">
-                        <td className="staff-name">{item.username}</td>
-                        <td className="staff-counter">{item.counter}</td>
-                        <td className="staff-phone">1</td>
-                        <td className="staff-mail">{item.email}</td>
-                        <td className="staff-revenue">1</td>
-                        <td>
-                          <button className="btn-more-info">Active</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
+              <div className="relative z-10">
+                {currentPageData.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="data absolute w-full left-0 ml-2"
+                    style={{ top: `${160 + index * 80}px` }}
+                  >
+                    <div
+                      className="absolute right-[845px] top-[-90px] font-medium text-black inline-block w-[122.8px] h-4 z-10"
+                      style={{ fontSize: "10px" }}
+                    >
+                      {item.username}
+                    </div>
+                    <div
+                      className="absolute right-[670px] top-[-90px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10 "
+                      style={{ fontSize: "10px" }}
+                    >
+                      {item.counter}
+                    </div>
+                    <div
+                      className="absolute right-[530px] top-[-90px] ml-6  font-medium inline-block w-[114.8px] h-[16.4px] z-10"
+                      style={{ fontSize: "10px" }}
+                    >
+                      {item.phone}
+                    </div>
+                    <div
+                      className="absolute right-[330px] top-[-90px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10"
+                      style={{ fontSize: "10px" }}
+                    >
+                      {item.email}
+                    </div>
+                    <div
+                      className="absolute right-[185px] top-[-90px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10"
+                      style={{ fontSize: "10px" }}
+                    >
+                      {item.revenue}
+                    </div>
+                    <div
+                      className="absolute right-[100px] top-[-90px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10"
+                      style={{ fontSize: "10px" }}
+                    >
+                      {item.status}
+                    </div>
+                    <div
+                      onClick={() => navigateToEditStaff(item.id)}
+                      className="cursor-pointer bg-[#15c09861] text-[#008667] top-[-90px] absolute right-[-100px] rounded-md box-border w-[80px] h-[17px] flex items-center justify-center text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
+                      style={{
+                        fontSize: "10px",
+                        borderRadius: "8px",
+                        padding: "5px 10px",
+                      }}
+                    >
+                      Edit
+                    </div>
+                    <div
+                      onClick={() => handleDelete(item.id)}
+                      className="cursor-pointer absolute top-[-90px] right-[-160px] rounded-md bg-firebrick-200 box-border w-[28px] h-[17px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10"
+                      style={{
+                        fontSize: "10px",
+                        borderRadius: "8px",
+                        padding: "5px 11px",
+                      }}
+                    >
+                      X
+                    </div>
+                    {item.status === "online" ? (
+                      <button
+                        className="bg-[#15c09861] text-[#008667] top-[-90px] absolute right-[13px] rounded-md box-border w-[80px] h-[17px] flex items-center justify-center text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
+                        style={{
+                          fontSize: "10px",
+                          borderRadius: "2px",
+                          padding: "5px 10px",
+                        }}
+                      >
+                        Active
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-[#f0a0a0] text-[#ff0000] top-[-90px] absolute right-[13px] rounded-md box-border w-[80px] h-[17px] flex items-center justify-center text-seagreen border-[0.6px] border-solid border-firebrick-100 z-10"
+                        style={{
+                          fontSize: "10px",
+                          borderRadius: "2px",
+                          padding: "5px 10px",
+                        }}
+                      >
+                        Inactive
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
 
               <div className="absolute ml-50 top-[37.3px] left-[571.1px] rounded-[6.25px] bg-ghostwhite-200 w-[229.8px] h-[34.6px] z-[1] text-5xs-5 text-silver">
                 <div className="absolute top-[0px] left-[0px] rounded-[6.25px] bg-ghostwhite-100 w-full h-full hidden" />
@@ -127,14 +272,12 @@ const StaffDataTable = () => {
                 />
               </div>
 
-              <div className="absolute top-[37.3px] ml-42.5 left-[380px] flex gap-[6.25px]">
-                <div className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#D1262661] rounded-[2.5px] border-[0.63px] ml-[-20px] border-solid border-[#D1262661]">
-                  <div className="relative w-fit [font-family:'Poppins',Helvetica] font-medium text-[#D1262661] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Edit
-                  </div>
-                </div>
+              <div
+                onClick={navigateToAddStaff}
+                className="cursor-pointer absolute top-[37.3px] ml-42.5 left-[380px] flex gap-[6.25px]"
+              >
                 <div className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#15c09861] rounded-[2.5px] border-[0.63px] mr-[0px] border-solid border-[#00b086]">
-                  <div className="relative w-fit font-medium text-[#008667] text-[8.8px] tracking-[-0.09px] leading-[normal]">
+                  <div className=" relative w-fit font-medium text-[#008667] text-[8.8px] tracking-[-0.09px] leading-[normal]">
                     Add
                   </div>
                 </div>

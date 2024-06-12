@@ -17,6 +17,8 @@ import AddJewelry from "./AddJewelry/AddJewelry";
 import EditJewelry from "./EditJewelry/EditJewelry";
 import Login from "./Login/Login";
 import SignUp from "./SignUp/SignUp";
+import AddStaff from "./AddStaff/AddStaff";
+import EditStaff from "./EditStaff/EditStaff";
 
 
 export default function App() {
@@ -46,6 +48,8 @@ export default function App() {
           <Route path="/add-jewelry" element={<AddJewelry />} />
           <Route path='/edit-jewelry/:id' element={<EditJewelry />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/add-staff" element={<AddStaff />} />
+          <Route path="/edit-staff/:id" element={<EditStaff />} />
         </Routes>
       </div>
     </Router>

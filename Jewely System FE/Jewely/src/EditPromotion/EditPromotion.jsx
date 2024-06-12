@@ -17,7 +17,7 @@ const EditPromotion = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5188/api/Promotion/GetPromotionById?id=${id}`)
+      .get(`http://localhost:5188/api/Promotion/GetPromotionById/${id}`)
       .then((response) => {
         const data = response.data;
         setPromotionData({
@@ -45,7 +45,46 @@ const EditPromotion = () => {
   };
 
   const save = () => {
-    // Update the promotion data on the server
+    const { description, discountRate, startDate, endDate } = promotionData;
+
+    if (description === "" || description.trim() === ""){
+      Swal.fire({
+        title: "Error!",
+        text: "Description must not be empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (
+      isNaN(discountRate) ||
+      discountRate < 0 ||
+      discountRate > 100 ||
+      discountRate === ""
+    ) {
+      Swal.fire({
+        title: "Error!",
+        text: "Discount Rate must be a valid number and from 0 to 100 and must not be left empty!",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (
+      isNaN(startDate.getTime()) ||
+      isNaN(endDate.getTime()) ||
+      startDate.getTime() > endDate.getTime() ||
+      startDate.getTime() === null ||
+      endDate.getTime() === null
+    ) {
+      Swal.fire({
+        title: "Error!",
+        text: "Start Date and End Date must be valid dates.",
+        icon: "error",
+      });
+      return;
+    }
+
     axios
       .put(
         `http://localhost:5188/api/Promotion/UpdatePromotion?id=${id}`,
@@ -115,7 +154,7 @@ const EditPromotion = () => {
                   value={promotionData.description}
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                  placeholder={promotionData.discountRate}
+                  placeholder={promotionData.description}
                   type="text"
                 />
               </div>
