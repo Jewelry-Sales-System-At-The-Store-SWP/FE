@@ -1,5 +1,42 @@
 .btn-wrapper {
     position: relative;
-    top: -85px; 
+    top: -18px; 
+  }
+
+  .pagination-staff {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    position: absolute;
+    margin-top: -60px;
+    right: 350px;
   }
   
+  .pagination-staff li {
+    list-style: none;
+    margin: 0 3px;
+  }
+  
+  .pagination-staff li a {
+    cursor: pointer;
+    padding: 10px 15px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  
+  .pagination-staff li a:hover {
+    background-color: #e9ecef;
+  }
+  
+  .pagination-staff li.active a {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .pagination-staff li.disabled a {
+    cursor: not-allowed;
+    color: #6c757d;
+  }
