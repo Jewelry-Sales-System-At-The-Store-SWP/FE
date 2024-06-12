@@ -17,6 +17,7 @@ import EditCustomer from './EditCustomer/EditCustomer'
 import AddJewelry from './AddJewelry/AddJewelry'
 import EditJewelry from './EditJewelry/EditJewelry'
 import AddStaff from './AddStaff/AddStaff'
+import EditStaff from './EditStaff/EditStaff'
 
 export default function App() {
   return (
@@ -40,6 +41,8 @@ export default function App() {
         <Route path='/add-jewelry' element={<AddJewelry />} />
         <Route path='/edit-jewelry/:id' element={<EditJewelry />} />
         <Route path='/add-staff' element={<AddStaff />} />
+        <Route path='/edit-staff/:id' element={<EditStaff />} />
+        
       </Routes>
     </div>
   </Router>

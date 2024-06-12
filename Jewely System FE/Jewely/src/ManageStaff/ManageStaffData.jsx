@@ -27,7 +27,9 @@ const navigate = useNavigate();
 const handleClick = () => {
   navigate("/add-staff");
 };
-
+const edit = (id) => {
+  navigate(`/edit-staff/${id}`);
+};
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
   };
@@ -125,7 +127,9 @@ const handleClick = () => {
                           </td>
                           <td className="relative">
                             <div className="btn-wrapper">
-                              <button className="btn-more-info w-[60px] round-full absolute left-[540px] ">
+                              <button 
+                               onClick={() => edit(item.userId)}
+                              className="btn-more-info w-[60px] round-full absolute left-[540px] ">
                                 Edit
                               </button>
                               <button
