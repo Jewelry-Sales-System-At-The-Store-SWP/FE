@@ -25,8 +25,8 @@ export default function App() {
     <Router>
       <div>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/" element={<Dashboard />} />
           <Route path="/manage-jewelry" element={<ManageJewely />} />
           <Route path="/manage-promotion" element={<ManagePromotion />} />
           <Route path="/manage-staff" element={<ManageStaff />} />

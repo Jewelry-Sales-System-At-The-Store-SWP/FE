@@ -6,6 +6,8 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Group10 from '../assets/Group 10.png'; 
+import Group11 from '../assets/Group 11.png'; 
 
 const StaffDataTable = () => {
   const [data, setStaff] = useState([]);
@@ -116,7 +118,7 @@ const StaffDataTable = () => {
             className="h-[84px] w-[84px] relative z-[1]"
             loading="lazy"
             alt=""
-            src="/group-10.svg"
+            src={Group10}
           />
           <div className="flex flex-col items-start justify-start gap-[4px]">
             <div className="relative tracking-[-0.01em] inline-block min-w-[69px] z-[1]">
@@ -134,7 +136,7 @@ const StaffDataTable = () => {
               className="h-[84px] w-[84px] relative z-[1]"
               loading="lazy"
               alt=""
-              src="/group-10-1.svg"
+              src={Group11}
             />
             <div className="flex flex-col items-start justify-start gap-[4px]">
               <div className="relative tracking-[-0.01em] inline-block min-w-[76px] z-[1]">
@@ -148,8 +150,8 @@ const StaffDataTable = () => {
         </div>
       </section>
 
-      <section className="absolute top-[285px] left-[326px] shadow-[0px_6.3px_37.5px_rgba(226,_236,_249,_0.5)] rounded-[18.75px] bg-white w-[1041.5px] flex flex-row items-start justify-start max-w-full">
-        <form className="m-0 flex-1 shadow-[0px_6.3px_37.5px_rgba(226,_236,_249,_0.5)] rounded-[18.75px] bg-white flex flex-col items-start justify-start pt-[13.3px] px-0 pb-[42px] box-border gap-[33.4px] max-w-full z-[3]">
+      <section className="absolute top-[285px] left-[300px] shadow-lg rounded-xl bg-white w-[1190px] h-[600px] max-w-full overflow-hidden">
+        <form className="flex flex-col space-y-4 w-full min-h-screen p-4">
           <img
             className="self-stretch h-[631px] relative rounded-[18.75px] max-w-full overflow-hidden shrink-0 hidden"
             alt=""
@@ -169,7 +171,7 @@ const StaffDataTable = () => {
                 {currentPageData.map((item, index) => (
                   <div
                     key={item.id}
-                    className="data absolute w-full left-0 ml-2"
+                    className="absolute w-full right-[100px] ml-2"
                     style={{ top: `${160 + index * 80}px` }}
                   >
                     <div

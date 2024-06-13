@@ -151,7 +151,7 @@ const Sidebar = () => {
           </div>
           <div className="flex flex-row items-start justify-start pt-0 px-4 pb-[5px]">
             <Link
-              to="/invoice-sell"  
+              to="/invoice-admin"  
               className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] cursor-pointer z-[2]"
               style={{ textDecoration: 'none', color: 'inherit' }}
               onClick={onInvoiceTextClick}

@@ -8,7 +8,11 @@ import Header from "../Header/Header";
 import Page from "./GoldPrice/Table";
 import BarChart from "./BarChart";
 import { Bold } from "lucide-react";
-
+import icon from '../assets/icon.png'
+import cycle from'../assets/cycle.svg'
+import usd from '../assets/Usd.png'
+import coin from'../assets/Coin.png'
+import check from '../assets/Check.png'
 const Dashboard = () => {
   const location = useLocation();
   const { user } = location.state || {};
@@ -33,14 +37,14 @@ const Dashboard = () => {
             <div className="w-[1141px] flex flex-row items-start justify-start py-0 px-8 box-border max-w-full">
               <div className="flex-1 overflow-x-auto flex flex-row items-start justify-start gap-[24px] max-w-full">
                 <CardSalesAnalytics
-                  icon="/icon.svg"
+                  icon={icon}
                   sales="Sales"
                   prop="$1,234.00"
                   prop1="+12%"
                   div={false}
                 />
                 <CardSalesAnalytics
-                  icon="/icon-2.svg"
+                  icon={cycle}
                   sales="Under Warranty"
                   prop="$956.00"
                   prop1="-5%"
@@ -53,7 +57,7 @@ const Dashboard = () => {
                   propHeight="unset"
                 />
                 <CardSalesAnalytics
-                  icon="/icon-1.svg"
+                  icon={usd}
                   sales="Total Revenue"
                   prop="$10,566.01"
                   prop1="+35%"
@@ -66,7 +70,7 @@ const Dashboard = () => {
                   propHeight="unset"
                 />
                 <CardSalesAnalytics
-                  icon="/icon-3.svg"
+                  icon={coin}
                   sales="Jewely"
                   prop="5,566.01"
                   div
@@ -151,12 +155,12 @@ const Dashboard = () => {
                             Transaction history
                           </b>
                         </div>
-                        <img
+                        {/* <img
                           className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
                           loading="lazy"
                           alt=""
                           src="/dots.svg"
-                        />
+                        /> */}
                       </div>
                       <div className="self-stretch flex flex-col items-start justify-start gap-[7.5px] text-xs">
                         <div className="self-stretch flex flex-row items-center justify-between py-[7px] px-0 gap-[20px] z-[1] mq450:flex-wrap">
@@ -164,7 +168,7 @@ const Dashboard = () => {
                             <img
                               className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
                               alt=""
-                              src="/icon-4.svg"
+                              src={check}
                             />
                             <div className="flex flex-col items-start justify-start gap-[4px]">
                               <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
@@ -188,7 +192,7 @@ const Dashboard = () => {
                             <img
                               className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
                               alt=""
-                              src="/icon-5.svg"
+                              src={check}
                             />
                             <div className="flex flex-col items-start justify-start gap-[4px]">
                               <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
@@ -212,7 +216,7 @@ const Dashboard = () => {
                             <img
                               className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
                               alt=""
-                              src="/icon-6.svg"
+                              src={check}
                             />
                             <div className="flex flex-col items-start justify-start gap-[4px]">
                               <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
