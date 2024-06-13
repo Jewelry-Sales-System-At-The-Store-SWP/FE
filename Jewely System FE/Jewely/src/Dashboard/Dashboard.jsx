@@ -25,32 +25,6 @@ const Dashboard = () => {
                 <h1 className="m-0 relative text-inherit tracking-[0.2px] leading-[125%] font-bold font-inherit inline-block min-w-[114px] whitespace-nowrap">
                   Overview
                 </h1>
-                {user && (
-                  <div
-                    className="welcome-back"
-                    style={{
-                      position: "absolute",
-                      fontSize: "14px",
-                      marginLeft: "700px",
-                      fontWeight: "bold",
-                      color: "red",
-                    }}
-                  >
-                    <span>Welcome Back: {user.fullName}</span>
-                    {user.profilePicture && (
-                      <img
-                        className="profile-picture"
-                        src={user.profilePicture}
-                        alt={`${user.fullName}'s profile`}
-                        style={{
-                          width: "45px",
-                          height: "45px",
-                          marginLeft: "20px",
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
                 <div className="relative text-xs leading-[160%] text-greyscale-500 whitespace-nowrap">
                   Detailed information about your store
                 </div>
