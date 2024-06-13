@@ -1,10 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
-import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import FacebookLogin from "react-facebook-login";
-// import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -14,41 +10,9 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const responseFacebook = (response) => {
-    console.log(response);
-    const userData = {
-      fullName: response.name,
-      email: response.email,
-      profilePicture: response.picture.data.url,
-    };
-    navigate("/dashboard", { state: { user: userData } });
-  };
-
   const navigateToSignUp = () => {
     navigate("/signup");
   };
-
-  // const login = useGoogleLogin({
-  //   onSuccess: (codeResponse) => console.log(codeResponse),
-  //   flow: "auth-code",
-  // });
-  const handleLoginGoogle = (credentialResponse) => {
-    try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      const userData = {
-        fullName: decoded.name,
-        email: decoded.email,
-        profilePicture: decoded.picture,
-      };
-      navigate("/dashboard", { state: { user: userData } });
-    } catch (error) {
-      console.error("Error decoding token:", error);
-    }
-  };
-
-  // const login = useGoogleLogin({
-  //   onSuccess: handleLoginGoogle,
-  // });
 
   return (
     <div className="root">
@@ -159,36 +123,23 @@ const Login = () => {
             </div>
             <div className="social-login-options">
               <div className="social-icons">
-                <div className="social-media-logo-wrapper">
-                  <FacebookLogin
-                    appId="439187722374579"
-                    autoLoad={true}
-                    fields="name,email,picture"
-                    callback={responseFacebook}
-                    icon="fa-facebook"
-                    className="social-media-logo"
-                  />
-                </div>
+                <img
+                  className="social-media-logo"
+                  loading="lazy"
+                  alt=""
+                  src="src/assets/social-media-logo.svg"
+                />
                 <img
                   className="social-media-logo1"
                   loading="lazy"
                   alt=""
                   src="src/assets/social-media-logo-1.svg"
                 />
-                {/* <button className="custom-google-login" onClick={() => login()}>
-                  <img
-                    className="social-media-logo2"
-                    loading="lazy"
-                    alt=""
-                    src="src/assets/social-media-logo-2.svg"
-                  />
-                </button> */}
-                <GoogleLogin
-                  onSuccess={handleLoginGoogle}
-                  onError={() => {
-                    console.log("Login Failed");
-                  }}
+                <img
                   className="social-media-logo2"
+                  loading="lazy"
+                  alt=""
+                  src="src/assets/social-media-logo-2.svg"
                 />
                 <div className="social-media-logo-frame">
                   <img
