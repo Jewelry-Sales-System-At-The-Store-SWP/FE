@@ -1,127 +1,114 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const EditStaff = () => {
+const AddCustomer = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const [staffData, setStaffData] = useState({
-    username: "",
-    counter: "",
+  const [customerData, setCustomerData] = useState({
+    name: "",
     phone: "",
-    email: "",
-    revenue: "",
+    address: "",
+    point: "",
+    mail: "",
   });
-
-  useEffect(() => {
-    axios
-    .get(`http://localhost:5188/api/User/GetUserById/${id}`)
-    .then((response) => {
-        const data = response.data;
-        setStaffData({
-          ...data,
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setStaffData({ ...staffData, [name]: value });
+    setCustomerData({ ...customerData, [name]: value });
   };
 
   const cancel = () => {
-    navigate("/manage-staff");
+    navigate("/manage-custom");
   };
 
   const save = () => {
-    const counter = parseInt(staffData.counter, 10);
-    const revenue = parseFloat(staffData.revenue);
-    if (staffData.username === "") {
+    const point = parseInt(customerData.point);
+
+    if (!customerData.name.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Username must not be empty!",
+        text: "Name must not be empty!",
         icon: "error",
       });
       return;
     }
 
-    if (staffData.email === "") {
+    if (!customerData.mail.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Email must not be empty!",
+        text: "Mail must not be empty!",
         icon: "error",
       });
       return;
     }
 
-    if (isNaN(revenue) || staffData.revenue < 0 || staffData.revenue === "") {
+    if (!customerData.address.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Revenue must be a valid number and cannot be leave empty!",
+        text: "Name must not be empty!",
         icon: "error",
       });
       return;
     }
 
-    if (
-      isNaN(counter) ||
-      !Number.isInteger(counter) ||
-      staffData.counter < 0 ||
-      staffData.counter === ""
-    ) {
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    if (!customerData.phone.trim() || !phoneRegex.test(customerData.phone)) {
       Swal.fire({
         title: "Error!",
-        text: "Checkout Counter must be a valid integer and cannot be leave empty!",
+        text: "Phone number must be in the format xxx-xxx-xxxx (x stands for digit) and not be empty!",
         icon: "error",
       });
       return;
     }
 
-    if (
-      staffData.phone === "" ||
-      isNaN(staffData.phone) ||
-      staffData.phone < 0
-    ) {
+    if (isNaN(point) || point < 0 || point === "") {
       Swal.fire({
         title: "Error!",
-        text: "Phone Number must be a valid sequence of numbers and must not be empty!",
+        text: "Point must be a valid number and must not be leave empty!",
         icon: "error",
       });
       return;
     }
+
+    const dataToSend = {
+      ...customerData,
+    };
+
     axios
-      .put(
-        `http://localhost:5188/api/User/UpdateUser/${id}`,
-        staffData
-      )
+       .post("http://localhost:5188/api/Promotion/AddNewCustomer", dataToSend)
+      //.post(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/`, dataToSend)
       .then((response) => {
-        Swal.fire({
-          title: "Success!",
-          text: "User updated successfully!",
-          icon: "success",
-        })
-          .then(() => {
-            navigate("/manage-staff");
+        if (response.status === 201) {
+          Swal.fire({
+            title: "Add Success!",
+            text: "Add Customer successfully!",
+            icon: "success",
           })
-          .then(() => {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Your work has been saved",
-              showConfirmButton: false,
-              timer: 1500,
+            .then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            })
+            .then(() => {
+              navigate("/manage-custom");
             });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to add customer.",
+            icon: "error",
           });
+        }
       })
       .catch((error) => {
-        console.error("Error updating user:", error);
         Swal.fire({
           title: "Error!",
-          text: "Failed to update user.",
+          text: "Failed to add customer.",
           icon: "error",
         });
       });
@@ -133,18 +120,21 @@ const EditStaff = () => {
         <div className="w-[568px] flex flex-col items-start justify-start gap-[22px] max-w-full">
           <div className="self-stretch flex flex-row items-start justify-end">
             <a className="ml-20 [text-decoration:none] relative tracking-[-0.01em] font-semibold text-[inherit]">
-              <p className="ml-20">Edit User</p>
+              <p className="ml-20">Add New Customer</p>
             </a>
           </div>
           <div className="w-[411px] flex flex-row items-start justify-start gap-[41px] max-w-full mq450:gap-[20px] mq525:flex-wrap">
             <div className="flex flex-col items-start justify-start gap-[37px] min-w-[170px] mq525:flex-1">
+              {/* <a className="[text-decoration:none] w-[101px] h-[29px] relative tracking-[-0.01em] font-semibold text-[inherit] inline-block shrink-0">
+                ID
+              </a> */}
               <div className="flex flex-col items-start justify-start gap-[33px]">
                 <a className="[text-decoration:none] w-[150px] relative tracking-[-0.01em] font-semibold text-[inherit] inline-block">
                   Full Name
                 </a>
                 <div className="flex flex-col items-start justify-start gap-[42px]">
                   <b className="relative tracking-[-0.01em] font-semibold">
-                    Checkout Counter
+                    Address
                   </b>
                   <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
                     Phone Number
@@ -153,7 +143,7 @@ const EditStaff = () => {
                     Email
                   </b>
                   <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Revenue
+                    Point
                   </b>
                 </div>
               </div>
@@ -161,22 +151,22 @@ const EditStaff = () => {
             <div className="flex-1 flex flex-col items-start justify-start gap-[24px] min-w-[130px]">
               <div className="mb-2 self-stretch rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                 <input
-                  name="username"
-                  value={staffData.username}
+                  name="name"
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                  placeholder={staffData.username}
+                  placeholder=""
                   type="text"
+                  value={customerData.name}
                 />
               </div>
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="counter"
-                    value={staffData.counter}
+                    name="address"
+                    value={customerData.address}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.counter}
+                    placeholder=""
                     type="text"
                   />
                 </div>
@@ -185,10 +175,10 @@ const EditStaff = () => {
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
                     name="phone"
-                    value={staffData.phone}
+                    value={customerData.phone}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.phone}
+                    placeholder=""
                     type="text"
                   />
                 </div>
@@ -196,23 +186,23 @@ const EditStaff = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="email"
-                    value={staffData.email}
+                    name="mail"
+                    value={customerData.mail}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.email}
+                    placeholder=""
                     type="text"
                   />
                 </div>
               </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
+              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px] mt-2">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="revenue"
-                    value={staffData.revenue}
+                    name="point"
+                    value={customerData.point}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.revenue}
+                    placeholder=""
                     type="text"
                   />
                 </div>
@@ -225,7 +215,7 @@ const EditStaff = () => {
       <div className="w-[293px] flex flex-row items-start justify-between gap-[20px]">
         <button
           onClick={save}
-          className="absolute left-[500px] top-[400px]  cursor-pointer py-1.5 px-[37px] bg-mediumaquamarine-200 rounded-10xs-5 flex flex-row items-start justify-start border-[0.6px] border-solid border-mediumseagreen hover:bg-seagreen-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-mediumaquamarine-100"
+          className="absolute left-[500px] top-[450px] cursor-pointer py-1.5 px-[37px] bg-mediumaquamarine-200 rounded-10xs-5 flex flex-row items-start justify-start border-[0.6px] border-solid border-mediumseagreen hover:bg-seagreen-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-mediumaquamarine-100"
         >
           <div className="relative text-4xs-8 tracking-[-0.01em] font-medium font-poppins text-seagreen-100 text-left inline-block min-w-[22px]">
             Save
@@ -233,7 +223,7 @@ const EditStaff = () => {
         </button>
         <button
           onClick={cancel}
-          className="absolute left-[680px] top-[400px] cursor-pointer py-1.5 px-8 bg-firebrick-200 w-[97px] rounded-10xs-5 box-border flex flex-row items-start justify-start border-[0.6px] border-solid border-firebrick-100 hover:bg-tomato-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-tomato-100"
+          className="absolute left-[660px] top-[450px] cursor-pointer py-1.5 px-8 bg-firebrick-200 w-[97px] rounded-10xs-5 box-border flex flex-row items-start justify-start border-[0.6px] border-solid border-firebrick-100 hover:bg-tomato-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-tomato-100"
         >
           <div className="relative text-4xs-8 tracking-[-0.01em] font-medium font-poppins text-firebrick-200 text-left inline-block min-w-[31px]">
             Cancel
@@ -244,4 +234,4 @@ const EditStaff = () => {
   );
 };
 
-export default EditStaff;
+export default AddCustomer;

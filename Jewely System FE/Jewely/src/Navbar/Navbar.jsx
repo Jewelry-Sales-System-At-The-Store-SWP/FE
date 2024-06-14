@@ -1,24 +1,14 @@
 import { useCallback } from "react";
 import { Link } from "react-router-dom"
 import React from "react";
-import helplogo from "../assets/Info Square.png"
-import Setinglogo from "../assets/Setting.png"
-import accountlogo from "../assets/Profile.png"
-import dashboardlogo from "../assets/Chart.png"
-import profilelog from "../assets/Document.png"
-import wallet from "../assets/Wallet.png"
-import ManagePromotion from "../ManagePromotion/ManagePromotion";
-import Dashboard from "../Dashboard/Dashboard";
-import ManageCustomer from "../ManageCustomer/ManageCustomer";
-import ManageJewely from "../ManageJewely/ManageJewely";
-import InvoiceAdmin from "../InvoiceAdmin/InvoiceAdmin";
+
 const Sidebar = () => {
   const onDashboardContainerClick = useCallback(() => {
     <Link to="/">Dashboard</Link>
   }, []);
 
   const onManageStaffContainerClick = useCallback(() => {
-    // <Link to ="/">Manager</Link>
+    <Link to="/">ManagerStaff</Link>
   }, []);
 
   const onManageCustomClick = useCallback(() => {
@@ -32,10 +22,9 @@ const Sidebar = () => {
     <Link to="/">ManageJewely</Link>
 
   }, []);
-  const onPaymentTextClick = useCallback(() => {
-    <Link to="/">ManageJewely</Link>
+  const onInvoiceTextClick = useCallback(() => {
+    <Link to="/">Invoice</Link>
   }, []);
-
   return (
     <div className=" w-60 bg-ghostwhite-200 flex flex-col items-start justify-start pt-5 pb-[467px] pr-4 pl-6 box-border gap-[60px] z-[1] text-left text-2xs text-white font-poppins mq1025:hidden mq1025:pb-[304px] mq1025:box-border mq450:pb-[198px] mq450:box-border">
       <div className=" w-60 h-[960px] relative bg-ghostwhite-200 hidden" />
@@ -161,21 +150,23 @@ const Sidebar = () => {
             </div>
           </div>
           <div className="flex flex-row items-start justify-start pt-0 px-4 pb-[5px]">
-            <div className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] z-[2]">
+            <Link
+              to="/invoice-admin"  
+              className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] cursor-pointer z-[2]"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={onInvoiceTextClick}
+            >
               <img
                 className="h-[18px] w-[18px] relative object-cover min-h-[18px] shrink-0 [debug_commit:1de1738]"
                 alt=""
                 src="src/assets/iconlyboldwallet@2x.png"
               />
               <div className="flex flex-col items-start justify-start pt-[3px] px-0 pb-0">
-                <div
-                  className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[47px] shrink-0 [debug_commit:1de1738] cursor-pointer"
-                  onClick={onPaymentTextClick}
-                >
+                <div className="relative tracking-[0.5px] leading-[12px] inline-block min-w-[47px] shrink-0 [debug_commit:1de1738]">
                   Invoice
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="flex flex-row items-start justify-start pt-0 px-4 pb-[5px]">
             <div className="flex flex-row items-start justify-start gap-[12px] opacity-[0.6] z-[2]">

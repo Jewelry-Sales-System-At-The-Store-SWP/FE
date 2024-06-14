@@ -1,171 +1,196 @@
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./ManageCustomer.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+import "../ManagePromotion/ManagePromotion.css";
 const CustomerDataTable = () => {
-  const [data, setData] = useState(null);
+  const [data, setCustomer] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5188/api/Customer")
+       .get("http://localhost:5188/api/Customer")
+      //.get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer`)
       .then((response) => {
-        setData(response.data);
-        console.log(response.data);
+        setCustomer(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching promotion details:", error);
+        console.error("There was an error fetching the promotion data:", error);
       });
   }, []);
+
+  const handleClick = () => {
+    navigate("/add-customer");
+  };
+
+  const edit = (customerId) => {
+    navigate(`/edit-customer/${customerId}`);
+  };
+
+  const handleDelete = (customerId) => {
+    Swal.fire({
+      title: "Are you sure that you want to delete this customer?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+           .delete(
+             `http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`
+           )
+          //.delete(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${customerId}`)
+          .then(() => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your customer has been deleted.",
+              icon: "success",
+            }).then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            });
+            setCustomer(data.filter((item) => item.id !== customerId));
+          })
+          .catch((error) => {
+            console.error("There was an error deleting the customer:", error);
+            Swal.fire({
+              title: "Error!",
+              text: "There was an error deleting the customer.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(data.length / itemsPerPage);
+
   return (
-    <div className="absolute w-[1236px] h-[726px] top-[106px] left-[280px]">
-      <div className="absolute w-[1236px] h-[726px] top-0 left-0">
-        <div className="relative w-[1260px] h-[733px] top-[-7px]">
-          <div className="relative w-[1198px] h-[801px] top-[-24px] left-[-38px] bg-[url(/static/img/rectangle-30-1.svg)] bg-[100%_100%]">
-            <div className="absolute w-[1063px] h-[465px] top-[152px] left-[38px]">
-              <div className="absolute w-[1063px] h-[465px] top-0 left-0">
-                <div className="absolute w-[787px] h-[19px] top-0 left-[42px]">
-                  <div className="absolute w-[126px] top-0 left-0 [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Name
-                  </div>
-                  <div className="absolute w-[96px] top-px left-[165px] [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Address
-                  </div>
-                  <div className="absolute w-[114px] top-0 left-[313px] [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Phone Number
-                  </div>
-                  <div className="absolute w-[77px] top-0 left-[504px] [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Mail
-                  </div>
-                  <div className="absolute w-[61px] top-[3px] left-[716px] [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-                    Point
-                  </div>
-                </div>
-                {data && (
-                  <table className="absolute w-[813px] h-[19px] top-[46px] left-[25px]">
-                    <tbody>
-                      {data.map((item, index)=>{
-                        return(
-                          <tr key={index} className="customer-table">
-                            <td className="customer-name">{item.name}</td>
-                            <td className="customer-address">{item.address}</td>
-                            <td className="customer-phone">{item.phone}</td>
-                            <td className="customer-mail">1</td>
-                            <td className="customer-point">{item.point}</td>
-                            <td>
-                              <button className="btn-more-info">
-                                More Info
-                              </button>
-                            </td>
-                            <td>
-                              <button className="btn-x">X</button>
-                            </td>
-                          </tr>
-                        );
-                        
+    <main className="absolute top-[117px] left-[266px] shadow-[0px_6.3px_37.5px_rgba(226,_236,_249,_0.5)] rounded-[18.75px] bg-white w-[1132px] h-[726px] text-left text-4xs-8 text-darkslategray-500 font-poppins">
+      <img
+        className="absolute top-[0px] left-[0px] rounded-[18.75px] w-full h-full hidden"
+        alt=""
+        src="/rectangle-30.svg"
+      />
 
-                      })}
-
-                    </tbody>
-                  </table>
-
-                )
-                }
-             
-              </div>
+      <div className="absolute top-[31px] left-[54.9px] text-sm-8 tracking-[-0.01em] font-semibold text-black whitespace-pre-wrap inline-block w-[173.5px] h-[21px] z-[1]">
+        ALL CUSTOMERS
+      </div>
+      <div className="relative z-10">
+        {currentPageData.map((item, index) => (
+          <div
+            key={item.id}
+            className="data absolute w-full left-0"
+            style={{ top: `${160 + index * 100}px` }}
+          >
+            <div className="absolute left-[48px] font-medium text-black inline-block w-[122.8px] h-4 z-10">
+              {item.name}
             </div>
-            <p className="absolute w-[267px] top-[642px] left-[79px] [font-family:'Poppins',Helvetica] font-medium text-[#b5b7c0] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-              Showing data 1 to 8 of&nbsp;&nbsp;256K entries
-            </p>
-            <div className="absolute w-[178px] top-[73px] left-[80px] [font-family:'Poppins',Helvetica] font-semibold text-black text-[13.8px] tracking-[-0.14px] leading-[normal]">
-              ALL&nbsp;&nbsp;CUSTOMERS
+            <div className="absolute left-[203px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10">
+              {item.address}
             </div>
-            <div className="absolute w-[238px] h-[35px] top-[80px] left-[629px]">
-              <div className="relative w-[236px] h-[35px] bg-[#f9fbff] rounded-[6.25px]">
-                <div className="absolute w-[46px] top-[12px] left-[43px] [font-family:'Poppins',Helvetica] font-normal text-[#b5b7c0] text-[7.5px] tracking-[-0.08px] leading-[normal]">
-                  Search
-                </div>
-                <img
-                  className="absolute w-[21px] h-[16px] top-[9px] left-[9px]"
-                  alt="Search"
-                  src="src/assets/search-1.svg"
-                />
-              </div>
+            <div className="absolute left-[360px] ml-6 font-medium inline-block w-[114.8px] h-[16.4px] z-10">
+              {item.phone}
             </div>
-            <div className="absolute w-[171px] h-[30px] top-[84px] left-[883px]">
-              <div className="relative w-[169px] h-[30px] bg-[#f9fbff] rounded-[6.25px]">
-                <img
-                  className="absolute w-[20px] h-[14px] top-[8px] left-[136px]"
-                  alt="Chevron down"
-                  src="src/aseets/chevron-down-1.svg"
-                />
-                <p className="absolute w-[112px] top-[8px] left-[16px] [font-family:'Poppins',Helvetica] font-normal text-transparent text-[7.5px] tracking-[-0.08px] leading-[normal]">
-                  <span className="text-[#7e7e7e] tracking-[-0.01px]">
-                    Short by :{" "}
-                  </span>
-                  <span className="font-semibold text-[#3d3b41] tracking-[-0.01px]">
-                    Newest
-                  </span>
-                </p>
-              </div>
+            <div className="absolute left-[546px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10">
+              {item.mail}
             </div>
-            <div className="absolute w-[287px] h-[16px] top-[640px] left-[759px]">
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[6.25px] py-[3.75px] absolute top-0 left-[42px] bg-[#5932ea] rounded-[2.5px] border-[0.63px] border-solid">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-white text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  1
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[5.62px] py-[3.75px] absolute top-0 left-[82px] bg-neutral-100 rounded-[2.5px] border-[0.63px] border-solid border-[#eeeeee]">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#404b52] text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  2
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[5.62px] py-[3.75px] absolute top-0 left-[163px] bg-neutral-100 rounded-[2.5px] border-[0.63px] border-solid border-[#eeeeee]">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#404b52] text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  4
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[3.12px] py-[3.75px] absolute top-0 left-[227px] bg-neutral-100 rounded-[2.5px] border-[0.63px] border-solid border-[#eeeeee]">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#404b52] text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  40
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[5.62px] py-[3.75px] absolute top-0 left-[269px] bg-neutral-100 rounded-[2.5px] border-[0.63px] border-solid border-[#eeeeee]">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#404b52] text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  &gt;
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[5.62px] py-[3.75px] absolute top-0 left-0 bg-neutral-100 rounded-[2.5px] border-[0.63px] border-solid border-[#eeeeee]">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#404b52] text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  &lt;
-                </div>
-              </div>
-              <div className="w-[11px] top-[6px] left-[204px] text-black text-[7.5px] tracking-[-0.08px] leading-[7.5px] absolute [font-family:'Poppins',Helvetica] font-medium">
-                ...
-              </div>
-              <div className="inline-flex flex-col items-center justify-center gap-[6.25px] px-[5px] py-[3.75px] absolute top-0 left-[123px] bg-neutral-100 rounded-[2.5px] border-[0.63px] border-solid border-[#eeeeee]">
-                <div className="relative w-fit mt-[-0.63px] [font-family:'Poppins',Helvetica] font-medium text-[#404b52] text-[7.5px] tracking-[-0.08px] leading-[7.5px] whitespace-nowrap">
-                  3
-                </div>
-              </div>
+            <div className="absolute left-[760.3px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10">
+              {item.point}
             </div>
+            <button
+              onClick={() => edit(item.id)}
+              className=" bg-[#15c09861] text-[#008667] absolute left-[922px] rounded-md bg-mediumaquamarine box-border w-[80px] flex items-center justify-center py-px px-[22px] text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => handleDelete(item.id)}
+              className="absolute left-[1033px] rounded-md bg-firebrick-200 box-border w-[29px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10"
+            >
+              X
+            </button>
           </div>
-        </div>
+        ))}
       </div>
 
-      <div className="flex absolute top-[52px] left-[350px] gap-[6.25px]">
-        <div className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#D1262661] rounded-[2.5px] border-[0.63px] ml-[-10px] border-solid border-[#D1262661]">
-          <div className="relative w-fit [font-family:'Poppins',Helvetica] font-medium text-[#D1262661] text-[8.8px] tracking-[-0.09px] leading-[normal]">
-            Edit
-          </div>
+      <div className="header-data">
+        <div className="absolute top-[138.1px] left-[14px] box-border w-[1036.9px] h-[0.6px] z-[1] border-t-[0.6px] border-solid border-whitesmoke-200" />
+
+        <div className="absolute top-[110.4px] left-[54.7px] tracking-[-0.01em] font-medium text-silver inline-block w-[123.3px] h-[16.4px] shrink-0 z-[1]">
+          Name
         </div>
-        <div className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#15c09861] rounded-[2.5px] border-[0.63px] mr[20px] border-solid border-[#00b086]">
-          <div className="relative w-fit [font-family:'Poppins',Helvetica] font-medium text-[#008667] text-[8.8px] tracking-[-0.09px] leading-[normal]">
+        <div className="absolute top-[110.6px] left-[216px] tracking-[-0.01em] font-medium text-silver inline-block w-[93.5px] h-[16.3px] shrink-0 z-[1]">
+          Address
+        </div>
+        <div className="absolute top-[110.4px] left-[379px] tracking-[-0.01em] font-medium text-silver inline-block w-[111.3px] h-[16.4px] z-[1]">
+          Phone Number
+        </div>
+        <div className="absolute top-[110px] left-[546.3px] tracking-[-0.01em] font-medium text-silver inline-block w-[75.1px] h-[17px] z-[1]">
+          Mail
+        </div>
+        <div className="absolute top-[112.6px] left-[752.3px] tracking-[-0.01em] font-medium text-silver inline-block w-[59.9px] h-[16.4px] z-[1]">
+          Point
+        </div>
+      </div>
+      <div className="absolute ml-75 top-[37.3px] left-[591.1px] rounded-[6.25px] bg-ghostwhite-200 w-[229.8px] h-[34.6px] z-[1] text-5xs-5 text-silver">
+        <div className="absolute top-[0px] left-[0px] rounded-[6.25px] bg-ghostwhite-100 w-full h-full hidden" />
+        <input
+          type="text"
+          className="absolute top-[12.2px] left-[41.7px] tracking-[-0.01em] inline-block w-[150px] h-[13.9px] z-[1] border-none outline-none bg-transparent text-black placeholder-black"
+          placeholder="Search"
+        />
+
+        <img
+          className="absolute top-[9.2px] left-[8.9px] w-[20.9px] h-[16.3px] overflow-hidden z-[1]"
+          loading="lazy"
+          alt=""
+          src="src/assets/search-1.svg"
+        />
+      </div>
+      <div className="absolute top-[37.3px] ml-62.5 left-[400px] flex gap-[6.25px]">
+        <div
+          onClick={handleClick}
+          className="flex w-[97px] h-[28px] items-center justify-center gap-[6.25px] px-[7.5px] py-[2.5px] bg-[#15c09861] rounded-[2.5px] border-[0.63px] mr-[20px] border-solid border-[#00b086]"
+        >
+          <div className="relative w-fit font-medium text-[#008667] text-[8.8px] tracking-[-0.09px] leading-[normal]">
             Add
           </div>
         </div>
       </div>
-    </div>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
+    </main>
   );
 };
 

@@ -2,110 +2,102 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const EditStaff = () => {
+const EditPromotion = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [staffData, setStaffData] = useState({
-    username: "",
-    counter: "",
-    phone: "",
-    email: "",
-    revenue: "",
+  const [promotionData, setPromotionData] = useState({
+    description: "",
+    discountRate: "",
+    startDate: new Date(),
+    endDate: new Date(),
   });
 
   useEffect(() => {
     axios
-    .get(`http://localhost:5188/api/User/GetUserById/${id}`)
-    .then((response) => {
+      .get(`http://localhost:5188/api/Promotion/GetPromotionById/${id}`)
+      .then((response) => {
         const data = response.data;
-        setStaffData({
+        setPromotionData({
           ...data,
+          startDate: new Date(data.startDate),
+          endDate: new Date(data.endDate),
         });
       })
       .catch((error) => {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching promotion data:", error);
       });
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setStaffData({ ...staffData, [name]: value });
+    setPromotionData({ ...promotionData, [name]: value });
+  };
+
+  const handleDateChange = (name, date) => {
+    setPromotionData({ ...promotionData, [name]: date });
   };
 
   const cancel = () => {
-    navigate("/manage-staff");
+    navigate("/manage-promotion");
   };
 
   const save = () => {
-    const counter = parseInt(staffData.counter, 10);
-    const revenue = parseFloat(staffData.revenue);
-    if (staffData.username === "") {
-      Swal.fire({
-        title: "Error!",
-        text: "Username must not be empty!",
-        icon: "error",
-      });
-      return;
-    }
+    const { description, discountRate, startDate, endDate } = promotionData;
 
-    if (staffData.email === "") {
+    if (description === "" || description.trim() === ""){
       Swal.fire({
         title: "Error!",
-        text: "Email must not be empty!",
-        icon: "error",
-      });
-      return;
-    }
-
-    if (isNaN(revenue) || staffData.revenue < 0 || staffData.revenue === "") {
-      Swal.fire({
-        title: "Error!",
-        text: "Revenue must be a valid number and cannot be leave empty!",
+        text: "Description must not be empty!",
         icon: "error",
       });
       return;
     }
 
     if (
-      isNaN(counter) ||
-      !Number.isInteger(counter) ||
-      staffData.counter < 0 ||
-      staffData.counter === ""
+      isNaN(discountRate) ||
+      discountRate < 0 ||
+      discountRate > 100 ||
+      discountRate === ""
     ) {
       Swal.fire({
         title: "Error!",
-        text: "Checkout Counter must be a valid integer and cannot be leave empty!",
+        text: "Discount Rate must be a valid number and from 0 to 100 and must not be left empty!",
         icon: "error",
       });
       return;
     }
 
     if (
-      staffData.phone === "" ||
-      isNaN(staffData.phone) ||
-      staffData.phone < 0
+      isNaN(startDate.getTime()) ||
+      isNaN(endDate.getTime()) ||
+      startDate.getTime() > endDate.getTime() ||
+      startDate.getTime() === null ||
+      endDate.getTime() === null
     ) {
       Swal.fire({
         title: "Error!",
-        text: "Phone Number must be a valid sequence of numbers and must not be empty!",
+        text: "Start Date and End Date must be valid dates.",
         icon: "error",
       });
       return;
     }
+
     axios
       .put(
-        `http://localhost:5188/api/User/UpdateUser/${id}`,
-        staffData
+        `http://localhost:5188/api/Promotion/UpdatePromotion?id=${id}`,
+        promotionData
       )
       .then((response) => {
         Swal.fire({
           title: "Success!",
-          text: "User updated successfully!",
+          text: "Promotion updated successfully!",
           icon: "success",
         })
           .then(() => {
-            navigate("/manage-staff");
+            navigate("/manage-promotion");
           })
           .then(() => {
             Swal.fire({
@@ -118,10 +110,10 @@ const EditStaff = () => {
           });
       })
       .catch((error) => {
-        console.error("Error updating user:", error);
+        console.error("Error updating promotion:", error);
         Swal.fire({
           title: "Error!",
-          text: "Failed to update user.",
+          text: "Failed to update promotion.",
           icon: "error",
         });
       });
@@ -133,27 +125,24 @@ const EditStaff = () => {
         <div className="w-[568px] flex flex-col items-start justify-start gap-[22px] max-w-full">
           <div className="self-stretch flex flex-row items-start justify-end">
             <a className="ml-20 [text-decoration:none] relative tracking-[-0.01em] font-semibold text-[inherit]">
-              <p className="ml-20">Edit User</p>
+              <p className="ml-20">Edit Promotion</p>
             </a>
           </div>
           <div className="w-[411px] flex flex-row items-start justify-start gap-[41px] max-w-full mq450:gap-[20px] mq525:flex-wrap">
             <div className="flex flex-col items-start justify-start gap-[37px] min-w-[170px] mq525:flex-1">
               <div className="flex flex-col items-start justify-start gap-[33px]">
                 <a className="[text-decoration:none] w-[150px] relative tracking-[-0.01em] font-semibold text-[inherit] inline-block">
-                  Full Name
+                  Name
                 </a>
                 <div className="flex flex-col items-start justify-start gap-[42px]">
                   <b className="relative tracking-[-0.01em] font-semibold">
-                    Checkout Counter
+                    Discount Percentage
                   </b>
                   <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Phone Number
+                    Start Date
                   </b>
                   <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Email
-                  </b>
-                  <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Revenue
+                    End Date
                   </b>
                 </div>
               </div>
@@ -161,62 +150,46 @@ const EditStaff = () => {
             <div className="flex-1 flex flex-col items-start justify-start gap-[24px] min-w-[130px]">
               <div className="mb-2 self-stretch rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                 <input
-                  name="username"
-                  value={staffData.username}
+                  name="description"
+                  value={promotionData.description}
                   onChange={handleChange}
                   className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                  placeholder={staffData.username}
+                  placeholder={promotionData.description}
                   type="text"
                 />
               </div>
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="counter"
-                    value={staffData.counter}
+                    name="discountRate"
+                    value={promotionData.discountRate}
                     onChange={handleChange}
                     className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.counter}
+                    placeholder={
+                      promotionData.discountRate
+                        ? `${promotionData.discountRate}%`
+                        : "Enter Discount Rate"
+                    }
                     type="text"
                   />
                 </div>
               </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
-                    name="phone"
-                    value={staffData.phone}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.phone}
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
-                    name="email"
-                    value={staffData.email}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.email}
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
-                    name="revenue"
-                    value={staffData.revenue}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder={staffData.revenue}
-                    type="text"
-                  />
-                </div>
-              </div>
+              <DatePicker
+                name="startDate"
+                selected={promotionData.startDate}
+                onChange={(date) => handleDateChange("startDate", date)}
+                className="px-4 w-full border border-gray-300 rounded p-1 text-xs"
+                placeholder={promotionData.startDate}
+                placeholderClassName="text-center"
+              />
+              <DatePicker
+                name="endDate"
+                selected={promotionData.endDate}
+                onChange={(date) => handleDateChange("endDate", date)}
+                className="px-4 w-full border border-gray-300 rounded p-1 text-xs mt-3"
+                placeholder={promotionData.endDate}
+                placeholderClassName="text-center"
+              />
             </div>
           </div>
         </div>
@@ -225,7 +198,7 @@ const EditStaff = () => {
       <div className="w-[293px] flex flex-row items-start justify-between gap-[20px]">
         <button
           onClick={save}
-          className="absolute left-[500px] top-[400px]  cursor-pointer py-1.5 px-[37px] bg-mediumaquamarine-200 rounded-10xs-5 flex flex-row items-start justify-start border-[0.6px] border-solid border-mediumseagreen hover:bg-seagreen-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-mediumaquamarine-100"
+          className="absolute left-[500px] top-[350px]  cursor-pointer py-1.5 px-[37px] bg-mediumaquamarine-200 rounded-10xs-5 flex flex-row items-start justify-start border-[0.6px] border-solid border-mediumseagreen hover:bg-seagreen-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-mediumaquamarine-100"
         >
           <div className="relative text-4xs-8 tracking-[-0.01em] font-medium font-poppins text-seagreen-100 text-left inline-block min-w-[22px]">
             Save
@@ -233,7 +206,7 @@ const EditStaff = () => {
         </button>
         <button
           onClick={cancel}
-          className="absolute left-[680px] top-[400px] cursor-pointer py-1.5 px-8 bg-firebrick-200 w-[97px] rounded-10xs-5 box-border flex flex-row items-start justify-start border-[0.6px] border-solid border-firebrick-100 hover:bg-tomato-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-tomato-100"
+          className="absolute left-[680px] top-[350px] cursor-pointer py-1.5 px-8 bg-firebrick-200 w-[97px] rounded-10xs-5 box-border flex flex-row items-start justify-start border-[0.6px] border-solid border-firebrick-100 hover:bg-tomato-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-tomato-100"
         >
           <div className="relative text-4xs-8 tracking-[-0.01em] font-medium font-poppins text-firebrick-200 text-left inline-block min-w-[31px]">
             Cancel
@@ -244,4 +217,4 @@ const EditStaff = () => {
   );
 };
 
-export default EditStaff;
+export default EditPromotion;
