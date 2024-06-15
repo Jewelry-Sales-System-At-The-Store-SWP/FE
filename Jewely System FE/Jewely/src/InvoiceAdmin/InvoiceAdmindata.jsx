@@ -68,7 +68,7 @@ const InvoiceAdmin = () => {
         <div className="w-[619px] flex flex-col items-start justify-start pt-0 px-0 pb-3.5 box-border gap-[12px] max-w-full text-base text-white">
           <div className="self-stretch bg-gray-100 overflow-hidden flex flex-row items-start justify-between py-[26px] pr-9 pl-[35px] gap-[20px] mq450:flex-wrap">
             <div className="w-[116px] flex flex-col items-start justify-start">
-              <b className="relative inline-block min-w-[86px]">Jewelly Store.</b>
+              <b className="relative inline-block min-w-[86px]">Jewelry Store.</b>
               <div className="self-stretch relative text-xs font-medium text-gray-200 whitespace-nowrap">
                 sales@anbucorp.com
               </div>

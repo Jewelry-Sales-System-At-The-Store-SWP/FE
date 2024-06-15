@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -14,22 +16,53 @@ const Login = () => {
     navigate("/signup");
   };
 
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const email = event.target.elements.email.value;
+    const password = event.target.elements.password.value;
+
+    axios
+      .post("http://localhost:5188/api/User/Login", { email, password })
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "You have successfully logged in!",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        }).then(() => {
+          navigate("/dashboard");
+        });
+      })
+      .catch((error) => {
+        let errorMessage =
+          error.response?.data?.message || "Login failed. Please try again.";
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed!",
+          text: "Your email or password is incorrect! Please try again.",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+      });
+  };
+
   return (
     <div className="root">
       <main className="form-login-label">
         <div className="form-field-wrapper">
           <h1 className="log-in">Log in</h1>
-          <form className="form-login-have-account">
+          <form className="form-login-have-account" onSubmit={handleLogin}>
             <div className="email">
               <div className="email-label-wrapper">
-                <div className="label">Email address or user name</div>
+                <div className="label">Email address</div>
                 <div className="password-hide-see">
                   <img className="icon" alt="" />
                   <div className="hide">Hide</div>
                 </div>
               </div>
-              <input className="text-field" type="text" />
-              <div className="error-message">Error message</div>
+              <input className="text-field" type="text" name="email" />
             </div>
             <div className="password-field-wrapper">
               <div className="text-field1">
@@ -64,8 +97,8 @@ const Login = () => {
                 <input
                   className="text-field2"
                   type={passwordVisible ? "text" : "password"}
+                  name="password"
                 />
-                <div className="error-message1">Error message</div>
               </div>
               <div className="check-box">
                 <input className="check-box1" type="checkbox" />
@@ -86,7 +119,7 @@ const Login = () => {
                   </span>
                 </div>
               </div>
-              <button className="button">
+              <button className="button" type="submit">
                 <div className="signup-button-label-wrapper">
                   <img className="icons" alt="" />
                   <div className="sign-up">Log in</div>
