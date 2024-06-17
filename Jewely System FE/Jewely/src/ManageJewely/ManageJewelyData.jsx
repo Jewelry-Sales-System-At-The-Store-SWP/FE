@@ -28,7 +28,7 @@ const JewelleryDataTable = () => {
           // .delete(
           //   `http://localhost:5188/api/Promotion/DeletePromotion?id=${jewelryId}`
           // )
-          .delete(`https://666427ef932baf9032aa2d16.mockapi.io/Jewely/${jewelleryId}`)
+          .delete(`http://localhost:5188/api/Jewelry/DeleteJewelry/${jewelleryId}`)
           .then(() => {
             Swal.fire({
               title: "Deleted!",

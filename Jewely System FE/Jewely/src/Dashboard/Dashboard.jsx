@@ -85,7 +85,7 @@ const Dashboard = () => {
             </div>
             <div className="self-stretch flex flex-row items-start justify-start py-0 pr-7 pl-[18px] box-border max-w-full">
               <div className="flex-1 flex flex-col items-end justify-start gap-[20px] max-w-full">
-                <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0 pl-3.5 box-border gap-[18px] max-w-full mq1050:flex-wrap">
+                <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0 pl-3.5 box-border gap-[18px] w-[1170px] mq1050:flex-wrap">
                   <div className="flex-1 rounded-xl bg-additional-white flex flex-col items-start justify-start p-6 box-border gap-[24px] max-w-full mq750:min-w-full">
                     <div className="w-[743px] h-[329px] relative rounded-xl bg-additional-white hidden max-w-full" />
                     <div className="self-stretch flex flex-row items-start justify-between gap-[20px] mq450:flex-wrap">
@@ -109,39 +109,6 @@ const Dashboard = () => {
                       </select>
                     </div>
                     <LineChart />
-                  </div>
-                  <div className="w-[359px] rounded-xl bg-additional-white flex flex-col items-start justify-start p-6 box-border relative gap-[24px] min-w-[359px] max-w-full mq450:min-w-full mq1050:flex-1">
-                    <div className="w-[359px] h-[329px] relative rounded-xl bg-additional-white hidden max-w-full z-[0]" />
-                    <div className="self-stretch flex flex-row items-start justify-between gap-[20px] mq450:flex-wrap">
-                      <div className="flex flex-col items-start justify-start gap-[4px]">
-                        <div className="relative leading-[160%] inline-block min-w-[73px] z-[1]">
-                          Number of Customers
-                        </div>
-                        <div className="flex flex-row items-start justify-start gap-[8px] text-lg text-greyscale-900">
-                          <b className="relative tracking-[0.2px] leading-[140%] inline-block min-w-[63px] z-[1]">
-                            10,320
-                          </b>
-                        </div>
-                      </div>
-                      <select
-                        className="formbar border rounded-lg form-select"
-                        id="yearSelect"
-                      >
-                        <option value="ThisWeek">This Week</option>
-                        <option value="LastWeek">Last Week</option>
-                      </select>
-                    </div>
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[16px] text-right mq450:flex-wrap">
-                      <div className="flex-1 flex flex-col items-start justify-start pt-[9px] px-0 pb-0 box-border min-w-[178px] text-left">
-                        <div className="self-stretch flex flex-col items-start justify-start gap-[15px]">
-                          <div className="self-stretch flex flex-col items-start justify-start gap-[1px]">
-                            <div className="self-stretch h-[164px] relative">
-                              <BarChart />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
                 <div className="self-stretch flex flex-row items-start justify-start gap-[47px] max-w-full text-base text-greyscale-900 mq750:gap-[23px] mq1050:flex-wrap">

@@ -25,8 +25,8 @@ export default function App() {
     <Router>
       <div>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} /> */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/manage-jewelry" element={<ManageJewely />} />
           <Route path="/manage-promotion" element={<ManagePromotion />} />
@@ -40,7 +40,7 @@ export default function App() {
           <Route path="/manage-custom" element={<ManageCustomer />} />
           <Route path="/manage-staff" element={<ManageStaff />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Dashboard />} />
+          {/* <Route path="/" element={<Dashboard />} /> */}
           <Route path="/add-promotion" element={<AddPromotion />} />
           <Route path="/edit-promotion/:id" element={<EditPromotion />} />
           <Route path="/add-customer" element={<AddCustomer />} />

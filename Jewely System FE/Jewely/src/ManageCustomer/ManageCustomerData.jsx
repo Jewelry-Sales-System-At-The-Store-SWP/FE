@@ -14,8 +14,8 @@ const CustomerDataTable = () => {
 
   useEffect(() => {
     axios
-      // .get("http://localhost:5188/api/Customer")
-      .get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer`)
+       .get("http://localhost:5188/api/Customer")
+      //.get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer`)
       .then((response) => {
         setCustomer(response.data);
       })
@@ -44,10 +44,10 @@ const CustomerDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          // .delete(
-          //   `http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`
-          // )
-          .delete(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${customerId}`)
+           .delete(
+             `http://localhost:5188/api/Customer/DeleteCustomer/${customerId}`
+           )
+          //.delete(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${customerId}`)
           .then(() => {
             Swal.fire({
               title: "Deleted!",
@@ -112,10 +112,10 @@ const CustomerDataTable = () => {
               {item.phone}
             </div>
             <div className="absolute left-[546px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10">
-              {item.mail}
+              {/* {item.mail} */} null
             </div>
             <div className="absolute left-[760.3px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10">
-              {item.point}
+              {/* {item.point} */} null
             </div>
             <button
               onClick={() => edit(item.id)}

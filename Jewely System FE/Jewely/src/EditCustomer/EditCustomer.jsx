@@ -16,10 +16,10 @@ const EditCustomer = () => {
 
   useEffect(() => {
     axios
-      // .get(
-      //   `http://localhost:5188/api/Promotion/GetPromotionById?id=${promotionId}`
-      // )
-      .get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${id}`)
+       .get(
+         `http://localhost:5188/api/Customer/GetCustomerById/${customerId}`
+       )
+      //.get(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${id}`)
       .then((response) => {
         const data = response.data;
         setCustomerData({
@@ -95,7 +95,7 @@ const EditCustomer = () => {
       //   promotionData
       // )
       .put(
-        `https://666963452e964a6dfed4eb9a.mockapi.io/Customer/${id}`,
+        `http://localhost:5188/api/Customer/UpdateCustomer/${customerId}`,
         customerData
       )
       .then((response) => {

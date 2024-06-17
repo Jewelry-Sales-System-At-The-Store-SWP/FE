@@ -45,8 +45,8 @@ const StaffDataTable = () => {
 
   useEffect(() => {
     axios
-      // .get("http://localhost:5188/api/User/GetUsers")
-      .get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
+       .get("http://localhost:5188/api/User/GetUsers")
+      //.get("https://666427ef932baf9032aa2d16.mockapi.io/Staffs")
       .then((response) => {
         setStaff(response.data);
         console.log(response.data);
@@ -60,7 +60,7 @@ const StaffDataTable = () => {
     setCurrentPage(event.selected);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (userId) => {
     Swal.fire({
       title: "Are you sure that you want to delete this user?",
       text: "You won't be able to revert this!",
@@ -72,8 +72,8 @@ const StaffDataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://666427ef932baf9032aa2d16.mockapi.io/Staffs/${id}`)
-          .then(() => {
+        .delete(`http://localhost:5188/api/User/DeleteUser/${userId}`)
+        .then(() => {
             Swal.fire({
               title: "Deleted!",
               text: "Your user has been deleted.",
@@ -87,7 +87,7 @@ const StaffDataTable = () => {
                 timer: 1500,
               });
             });
-            setStaff(data.filter((item) => item.id !== id));
+            setStaff(data.filter((item) => item.userId !== userId));
           })
           .catch((error) => {
             console.error("There was an error deleting a user:", error);
@@ -170,7 +170,7 @@ const StaffDataTable = () => {
               <div className="relative z-10">
                 {currentPageData.map((item, index) => (
                   <div
-                    key={item.id}
+                    key={item.userId}
                     className="absolute w-full right-[100px] ml-2"
                     style={{ top: `${160 + index * 80}px` }}
                   >
@@ -184,13 +184,13 @@ const StaffDataTable = () => {
                       className="absolute right-[670px] top-[-90px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10 "
                       style={{ fontSize: "10px" }}
                     >
-                      {item.counter}
+                      null
                     </div>
                     <div
                       className="absolute right-[530px] top-[-90px] ml-6  font-medium inline-block w-[114.8px] h-[16.4px] z-10"
                       style={{ fontSize: "10px" }}
                     >
-                      {item.phone}
+                      null
                     </div>
                     <div
                       className="absolute right-[330px] top-[-90px] font-medium whitespace-pre-wrap inline-block w-[167.9px] h-[16.4px] z-10"
@@ -202,7 +202,7 @@ const StaffDataTable = () => {
                       className="absolute right-[185px] top-[-90px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10"
                       style={{ fontSize: "10px" }}
                     >
-                      {item.revenue}
+                      null
                     </div>
                     <div
                       className="absolute right-[100px] top-[-90px] font-medium whitespace-pre-wrap inline-block w-[74.6px] h-[19.3px] min-w-[74.6px] z-10"
@@ -211,7 +211,7 @@ const StaffDataTable = () => {
                       {item.status}
                     </div>
                     <div
-                      onClick={() => navigateToEditStaff(item.id)}
+                      onClick={() => navigateToEditStaff(item.userId)}
                       className="cursor-pointer bg-[#15c09861] text-[#008667] top-[-90px] absolute right-[-100px] rounded-md box-border w-[80px] h-[17px] flex items-center justify-center text-seagreen border-[0.6px] border-solid border-mediumseagreen z-10"
                       style={{
                         fontSize: "10px",
@@ -222,7 +222,7 @@ const StaffDataTable = () => {
                       Edit
                     </div>
                     <div
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDelete(item.userId)}
                       className="cursor-pointer absolute top-[-90px] right-[-160px] rounded-md bg-firebrick-200 box-border w-[28px] h-[17px] flex items-center justify-start py-px px-[11px] text-firebrick-100 border-[0.6px] border-solid border-firebrick-100 z-10"
                       style={{
                         fontSize: "10px",

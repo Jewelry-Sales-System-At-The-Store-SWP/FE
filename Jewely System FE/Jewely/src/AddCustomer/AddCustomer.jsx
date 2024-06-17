@@ -76,8 +76,8 @@ const AddCustomer = () => {
     };
 
     axios
-      // .post("http://localhost:5188/api/Promotion/AddNewCustomer", dataToSend)
-      .post(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/`, dataToSend)
+       .post("http://localhost:5188/api/Promotion/AddNewCustomer", dataToSend)
+      //.post(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/`, dataToSend)
       .then((response) => {
         if (response.status === 201) {
           Swal.fire({
