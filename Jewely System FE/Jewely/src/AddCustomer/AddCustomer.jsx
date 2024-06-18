@@ -9,8 +9,6 @@ const AddCustomer = () => {
     name: "",
     phone: "",
     address: "",
-    point: "",
-    mail: "",
   });
 
   const handleChange = (e) => {
@@ -23,8 +21,6 @@ const AddCustomer = () => {
   };
 
   const save = () => {
-    const point = parseInt(customerData.point);
-
     if (!customerData.name.trim()) {
       Swal.fire({
         title: "Error!",
@@ -34,10 +30,10 @@ const AddCustomer = () => {
       return;
     }
 
-    if (!customerData.mail.trim()) {
+    if (!customerData.phone.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Mail must not be empty!",
+        text: "Phone must not be empty!",
         icon: "error",
       });
       return;
@@ -46,50 +42,26 @@ const AddCustomer = () => {
     if (!customerData.address.trim()) {
       Swal.fire({
         title: "Error!",
-        text: "Name must not be empty!",
+        text: "Address must not be empty!",
         icon: "error",
       });
       return;
     }
-
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
-    if (!customerData.phone.trim() || !phoneRegex.test(customerData.phone)) {
-      Swal.fire({
-        title: "Error!",
-        text: "Phone number must be in the format xxx-xxx-xxxx (x stands for digit) and not be empty!",
-        icon: "error",
-      });
-      return;
-    }
-
-    if (isNaN(point) || point < 0 || point === "") {
-      Swal.fire({
-        title: "Error!",
-        text: "Point must be a valid number and must not be leave empty!",
-        icon: "error",
-      });
-      return;
-    }
-
-    const dataToSend = {
-      ...customerData,
-    };
 
     axios
-       .post("http://localhost:5188/api/Promotion/AddNewCustomer", dataToSend)
-      //.post(`https://666963452e964a6dfed4eb9a.mockapi.io/Customer/`, dataToSend)
+      .post("http://localhost:5188/api/Customer/CreateCustomer", customerData)
       .then((response) => {
-        if (response.status === 201) {
+        if (response.status === 200) {
           Swal.fire({
             title: "Add Success!",
-            text: "Add Customer successfully!",
+            text: "Customer added successfully!",
             icon: "success",
           })
             .then(() => {
               Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
-                title: "Your work has been saved",
+                title: "Customer has been created",
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -125,25 +97,16 @@ const AddCustomer = () => {
           </div>
           <div className="w-[411px] flex flex-row items-start justify-start gap-[41px] max-w-full mq450:gap-[20px] mq525:flex-wrap">
             <div className="flex flex-col items-start justify-start gap-[37px] min-w-[170px] mq525:flex-1">
-              {/* <a className="[text-decoration:none] w-[101px] h-[29px] relative tracking-[-0.01em] font-semibold text-[inherit] inline-block shrink-0">
-                ID
-              </a> */}
               <div className="flex flex-col items-start justify-start gap-[33px]">
                 <a className="[text-decoration:none] w-[150px] relative tracking-[-0.01em] font-semibold text-[inherit] inline-block">
-                  Full Name
+                  Name
                 </a>
                 <div className="flex flex-col items-start justify-start gap-[42px]">
                   <b className="relative tracking-[-0.01em] font-semibold">
+                    Phone
+                  </b>
+                  <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
                     Address
-                  </b>
-                  <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Phone Number
-                  </b>
-                  <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Email
-                  </b>
-                  <b className="w-[150px] relative tracking-[-0.01em] font-semibold inline-block">
-                    Point
                   </b>
                 </div>
               </div>
@@ -162,18 +125,6 @@ const AddCustomer = () => {
               <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
                 <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
                   <input
-                    name="address"
-                    value={customerData.address}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder=""
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
                     name="phone"
                     value={customerData.phone}
                     onChange={handleChange}
@@ -183,29 +134,15 @@ const AddCustomer = () => {
                   />
                 </div>
               </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px]">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
-                    name="mail"
-                    value={customerData.mail}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder=""
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[11px] mt-2">
-                <div className="flex-1 rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
-                  <input
-                    name="point"
-                    value={customerData.point}
-                    onChange={handleChange}
-                    className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
-                    placeholder=""
-                    type="text"
-                  />
-                </div>
+              <div className="mb-2 self-stretch rounded bg-white flex flex-row items-start justify-start py-1.5 px-[7px] border-[1px] border-solid border-gray">
+                <input
+                  name="address"
+                  onChange={handleChange}
+                  className="w-full [border:none] [outline:none] font-roboto text-xs bg-[transparent] h-3.5 flex-1 relative text-gray text-left inline-block min-w-[110px] p-0"
+                  placeholder=""
+                  type="text"
+                  value={customerData.address}
+                />
               </div>
             </div>
           </div>
@@ -215,7 +152,7 @@ const AddCustomer = () => {
       <div className="w-[293px] flex flex-row items-start justify-between gap-[20px]">
         <button
           onClick={save}
-          className="absolute left-[500px] top-[450px] cursor-pointer py-1.5 px-[37px] bg-mediumaquamarine-200 rounded-10xs-5 flex flex-row items-start justify-start border-[0.6px] border-solid border-mediumseagreen hover:bg-seagreen-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-mediumaquamarine-100"
+          className="absolute left-[500px] top-[350px] cursor-pointer py-1.5 px-[37px] bg-mediumaquamarine-200 rounded-10xs-5 flex flex-row items-start justify-start border-[0.6px] border-solid border-mediumseagreen hover:bg-seagreen-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-mediumaquamarine-100"
         >
           <div className="relative text-4xs-8 tracking-[-0.01em] font-medium font-poppins text-seagreen-100 text-left inline-block min-w-[22px]">
             Save
@@ -223,7 +160,7 @@ const AddCustomer = () => {
         </button>
         <button
           onClick={cancel}
-          className="absolute left-[660px] top-[450px] cursor-pointer py-1.5 px-8 bg-firebrick-200 w-[97px] rounded-10xs-5 box-border flex flex-row items-start justify-start border-[0.6px] border-solid border-firebrick-100 hover:bg-tomato-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-tomato-100"
+          className="absolute left-[660px] top-[350px] cursor-pointer py-1.5 px-8 bg-firebrick-200 w-[97px] rounded-10xs-5 box-border flex flex-row items-start justify-start border-[0.6px] border-solid border-firebrick-100 hover:bg-tomato-200 hover:box-border hover:border-[0.6px] hover:border-solid hover:border-tomato-100"
         >
           <div className="relative text-4xs-8 tracking-[-0.01em] font-medium font-poppins text-firebrick-200 text-left inline-block min-w-[31px]">
             Cancel
@@ -235,3 +172,4 @@ const AddCustomer = () => {
 };
 
 export default AddCustomer;
+
