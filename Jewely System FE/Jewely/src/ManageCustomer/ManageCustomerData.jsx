@@ -103,7 +103,7 @@ const CustomerDataTable = () => {
             style={{ top: `${160 + index * 100}px` }}
           >
             <div className="absolute left-[48px] font-medium text-black inline-block w-[122.8px] h-4 z-10">
-              {item.name}
+              {item.fullName}
             </div>
             <div className="absolute left-[203px] ml-5 font-medium inline-block w-[110.2px] h-4 z-10">
               {item.address}

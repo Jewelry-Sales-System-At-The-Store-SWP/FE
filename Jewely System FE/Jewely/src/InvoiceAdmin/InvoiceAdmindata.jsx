@@ -2,11 +2,36 @@ import "./InvoiceAdmin.css";
 import React, { useEffect, useState } from 'react';
 import Modal from "./Modal"
 import axios from "axios";
+import Autosuggest from 'react-autosuggest';
+import ModalCustomer from "./ModalCreateCustomer";
+
 const InvoiceAdmin = () => {
+  const [value, setValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestedCustomers, setSuggestedCustomers] = useState([]);
   const [result, setresult] = useState([]);
   const [addData, SetaddData] = useState("");
   const [add, setAdd] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  // const [BillData, setBillData] = useState({
+  //   name: "",
+  //   barcode: "",
+  //   weight: "",
+  //   stonecost: "",
+  //   // laborcost: "",
+  // });
   const openModal = () => {
     setShowModal(true);
   };
@@ -14,7 +39,7 @@ const InvoiceAdmin = () => {
   const handleSaveChanges = (onBarcodeSubmit) => {
     SetaddData(onBarcodeSubmit);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,10 +56,10 @@ const InvoiceAdmin = () => {
   useEffect(() => {
     if (addData) {
       const filteredItems = result.filter(item => item.Barcode === addData);
-  
+
       if (filteredItems.length > 0) {
-        setAdd(prevItems => {         
-          const existingIds = new Set(prevItems.map(item => item.id));        
+        setAdd(prevItems => {
+          const existingIds = new Set(prevItems.map(item => item.id));
           const newItems = filteredItems.filter(item => !existingIds.has(item.id));
           return [...prevItems, ...newItems];
         });
@@ -57,12 +82,68 @@ const InvoiceAdmin = () => {
     month: 'short',
     year: 'numeric'
   });
+
+  const getSuggestions = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? [] : suggestedCustomers.filter(
+      customer =>
+        customer.fullName.toLowerCase().includes(inputValue) ||
+        customer.phone.includes(inputValue)
+    );
+  };
+
+  const renderSuggestion = (suggestion) => (
+    <div>
+      <div>{suggestion.fullName}</div>
+      <div>{suggestion.phone}</div>
+      <div>{suggestion.address}</div>
+    </div>
+  );
+  const onChange = (event, { newValue }) => {
+    setValue(newValue);
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    setSuggestions(getSuggestions(value));
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const onSuggestionSelected = (event, { suggestion }) => {
+    setName(suggestion.fullName);
+    setPhone(suggestion.phone);
+    setAddress(suggestion.address);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5188/api/Customer');
+        setSuggestedCustomers(response.data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, [])
+
+  const noValidSuggestions = suggestions.length === 0 || suggestions.every(suggestion => suggestion.phone === null);
+
+  const handleAddButtonClick = () => {
+    // Handle the logic to add a new customer
+    console.log('Add new customer:', { name, phone, address });
+  };
   return (
     <div className="w-full relative overflow-hidden flex flex-row items-start justify-start pt-9 pb-[83px] pr-0 pl-[203px] box-border gap-[70px] leading-[normal] tracking-[normal] text-left text-xs text-gray-100 font-satoshi mq750:gap-[35px] mq750:pl-[101px] mq750:box-border mq450:gap-[17px] mq450:pl-5 mq450:box-border mq1125:flex-wrap">
       <div className="flex-1 bg-white overflow-hidden flex flex-col items-start justify-start pt-[54px] px-[35px] pb-[35px] box-border gap-[19px] max-w-full mq750:min-w-full mq450:pt-[23px] mq450:pb-5 mq450:box-border mq1050:pt-[35px] mq1050:pb-[23px] mq1050:box-border">
         <div className="w-[251px] flex flex-row items-start justify-start pt-0 px-0 pb-[5px] box-border text-[20px]">
           <b className="h-[27px] flex-1 relative inline-block mq450:text-base">
-            New Invoices: MGL524874
+            New Invoices:
           </b>
         </div>
         <div className="w-[619px] flex flex-col items-start justify-start pt-0 px-0 pb-3.5 box-border gap-[12px] max-w-full text-base text-white">
@@ -98,16 +179,38 @@ const InvoiceAdmin = () => {
                   type="text"
                   className="w-full m-0 bg-transparent border-none text-gray-300 placeholder-gray-300"
                   placeholder="Hatake Kakashi"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
-                <input
-                  type="text"
-                  className="w-full m-0 bg-transparent border-none text-gray-300 placeholder-gray-300"
-                  placeholder="0123456789"
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={onSuggestionsClearRequested}
+                  getSuggestionValue={(suggestion) => suggestion.phone}  // Only show the phone in the input field
+                  renderSuggestion={renderSuggestion}
+                  onSuggestionSelected={onSuggestionSelected}
+                  inputProps={{
+                    className: "w-full m-0 bg-transparent border-none text-gray-300 placeholder-gray-300",
+                    placeholder: 'Enter phone number',
+                    value,
+                    onChange
+                  }}
                 />
+                {noValidSuggestions && value.trim() && (
+                  <button
+                    className="mt-2 p-2 bg-blue-500 text-white rounded"
+                    onClick={handleAddButtonClick}
+                  >
+                    + Add New Customer                                       
+                  </button>
+                  
+                )}
                 <input
                   type="text"
                   className="w-full m-0 bg-transparent border-none text-gray-300 placeholder-gray-300"
                   placeholder="Hidden Leaf, Land of fire."
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
             </div>
