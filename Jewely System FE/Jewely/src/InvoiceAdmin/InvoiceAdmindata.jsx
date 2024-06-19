@@ -170,7 +170,7 @@ const InvoiceAdmin = () => {
                 <p className="m-0">Issued Date: {dateString}</p>
               </div>
             </div>
-            <div className="w-[136px] flex flex-col items-end justify-start gap-[17px] text-right">
+            <div className="w-[210px] flex flex-col items-end justify-start gap-[17px] text-right">
               <b className="w-[61px] relative inline-block min-w-[61px]">
                 Billed to
               </b>
@@ -178,7 +178,7 @@ const InvoiceAdmin = () => {
                 <input
                   type="text"
                   className="w-full m-0 bg-transparent border-none text-gray-300 placeholder-gray-300"
-                  placeholder="Hatake Kakashi"
+                  placeholder="Enter the Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -196,19 +196,15 @@ const InvoiceAdmin = () => {
                     onChange
                   }}
                 />
-                {noValidSuggestions && value.trim() && (
-                  <button
-                    className="mt-2 p-2 bg-blue-500 text-white rounded"
-                    onClick={handleAddButtonClick}
-                  >
-                    + Add New Customer                                       
-                  </button>
-                  
+                {noValidSuggestions && value.trim() && !name.trim() && !address.trim() && (
+                  <div>
+                    <ModalCustomer isOpen={isModalOpen} onClose={handleCloseModal} />
+                  </div>
                 )}
                 <input
                   type="text"
                   className="w-full m-0 bg-transparent border-none text-gray-300 placeholder-gray-300"
-                  placeholder="Hidden Leaf, Land of fire."
+                  placeholder="Enter the Address"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
@@ -333,7 +329,6 @@ const InvoiceAdmin = () => {
         </div>
         <div className="w-[100px] h-[100px] relative overflow-hidden shrink-0 hidden" />
       </div>
-
     </div>
   );
 };

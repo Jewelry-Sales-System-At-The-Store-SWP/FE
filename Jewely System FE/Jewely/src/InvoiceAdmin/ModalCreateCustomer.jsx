@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
 
-const  ModalCustomer = ({ isOpen, onClose }) => {
+function ModalCustomer() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -15,87 +23,105 @@ const  ModalCustomer = ({ isOpen, onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    onClose();
+  const handleSaveChanges = async () => {
+    try {
+      const response = await axios.post('http://localhost:5188/api/Customer/CreateCustomer', formData);
+      console.log('Response from server:', response.data);
+      handleClose(); 
+      window.location.reload(); 
+    } catch (error) {
+      console.error('Error saving customer:', error);
+    }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h2 className="text-xl mb-4">Create New Entry</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Gender</label>
-            <input
-              type="text"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Address</label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Point</label>
-            <input
-              type="number"
-              name="point"
-              value={formData.point}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="flex justify-end">
-            <button type="button" onClick={onClose} className="mr-4 px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">Save</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <>
+      <button
+        className="mt-2 p-2 bg-blue-500 text-white rounded"
+        onClick={handleShow}
+      >
+        + Add New Customer
+      </button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create New Customer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formFullName">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Enter full name"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter email"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formPhone">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter phone number"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGender">
+              <Form.Label>Gender</Form.Label>
+              <Form.Control
+                type="text"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                placeholder="Enter gender"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formAddress">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Enter address"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formPoint">
+              <Form.Label>Point</Form.Label>
+              <Form.Control
+                type="number"
+                name="point"
+                value={formData.point}
+                onChange={handleChange}
+                placeholder="Enter point"
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Create
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
-};
+}
 
 export default ModalCustomer;
