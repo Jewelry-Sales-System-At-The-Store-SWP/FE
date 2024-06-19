@@ -11,6 +11,7 @@ const Page = () => {
 
 
   useEffect(() => {
+<<<<<<< Updated upstream
     axios
       .get("http://localhost:5188/api/GoldPrice")
       // axios.get('https://666427ef932baf9032aa2d16.mockapi.io/Promotions')
@@ -20,6 +21,16 @@ const Page = () => {
       })
       .catch((error) => {
         console.error("There was an error fetching the promotion data:", error);
+=======
+    axios.get('http://localhost:5188/api/GoldPrice')
+      .then(response => {
+        console.log('Data retrieved:', response.data);
+        setGoldPrices(response.data);
+        setUpdateTime(response.data.lastUpdated)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+>>>>>>> Stashed changes
       });
   }, []);
 
@@ -85,29 +96,43 @@ const Page = () => {
           </div>
         </div>
       </div>
+<<<<<<< Updated upstream
       {goldPrices.length > 0 ? goldPrices.map((price) => (
         <div key={price.goldPriceId} className="self-stretch h-[57px] relative shrink-0 max-w-full mq750:h-auto mq750:min-h-[57] text-xs">
+=======
+      {goldPrices.map((item) => (
+        <div key={item.goldPriceId} className="self-stretch h-[57px] relative shrink-0 [debug_commit:bf4bc93] max-w-full mq750:h-auto mq750:min-h-[57] text-xs">
+>>>>>>> Stashed changes
           <div className="max-w-full overflow-x-auto">
             <div className="min-w-[600px] bg-white p-3">
               <div className="grid grid-cols-3 gap-4">
                 <div className="font-semibold col-span-1">
+<<<<<<< Updated upstream
                   {price.type}
+=======
+                  {item.type}
+>>>>>>> Stashed changes
                 </div>
                 <div className="font-semibold text-right col-span-1 pr-5">
-                  {price.sellPrice} triệu đồng VND
+                  {item.sellPrice} triệu đồng VND
                 </div>
                 <div className="buytab font-semibold text-right col-span-1 ">
-                  {price.buyPrice} triệu đồng VND
+                  {item.buyPrice} triệu đồng VND
                 </div>
               </div>
             </div>
           </div>
           <div className="absolute top-[56px] left-[0px] box-border w-[704px] h-px border-t-[1px] border-solid border-greyscale-100" />
         </div>
+<<<<<<< Updated upstream
       )) : (
         <p>No gold prices available.</p>
       )}
     </main>
+=======
+      ))}
+    </div>
+>>>>>>> Stashed changes
   );
 };
 export default Page;

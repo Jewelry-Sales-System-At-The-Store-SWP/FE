@@ -12,7 +12,7 @@ const PromotionDataTable = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     axios
       .get("http://localhost:5188/api/Promotion/GetPromotions")
@@ -24,7 +24,7 @@ const PromotionDataTable = () => {
         console.error("There was an error fetching the promotion data:", error);
       });
   }, []);
-
+  
   const handleClick = () => {
     navigate("/add-promotion");
   };

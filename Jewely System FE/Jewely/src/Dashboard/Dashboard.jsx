@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import CardSalesAnalytics from "../Dashboard/Data";
@@ -9,14 +9,27 @@ import Page from "./GoldPrice/Table";
 import BarChart from "./BarChart";
 import { Bold } from "lucide-react";
 import icon from '../assets/icon.png'
-import cycle from'../assets/cycle.svg'
+import cycle from '../assets/cycle.svg'
 import usd from '../assets/Usd.png'
-import coin from'../assets/Coin.png'
+import coin from '../assets/Coin.png'
 import check from '../assets/Check.png'
+import axios from "axios";
+import { format } from 'date-fns';
 const Dashboard = () => {
   const location = useLocation();
   const { user } = location.state || {};
-
+  const [Bill, setBill] = useState([]);
+  
+  useEffect(() => {
+    axios.get('http://localhost:5188/api/Bill/GetBills')
+      .then(response => {
+        console.log('Data retrieved:', response.data);
+        setBill(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
   return (
     <div className="w-full relative bg-additional-white overflow-hidden flex flex-row items-start justify-start gap-[20px] leading-[normal] tracking-[normal] mq1050:pl-5 mq1050:pr-5 mq1050:box-border">
       <Sidebar />
@@ -129,79 +142,34 @@ const Dashboard = () => {
                           src="/dots.svg"
                         /> */}
                       </div>
-                      <div className="self-stretch flex flex-col items-start justify-start gap-[7.5px] text-xs">
-                        <div className="self-stretch flex flex-row items-center justify-between py-[7px] px-0 gap-[20px] z-[1] mq450:flex-wrap">
-                          <div className="flex flex-row items-start justify-start gap-[12px]">
-                            <img
-                              className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
-                              alt=""
-                              src={check}
-                            />
-                            <div className="flex flex-col items-start justify-start gap-[4px]">
-                              <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
-                                <span>{`Payment from `}</span>
-                                <span className="text-primary-600-base">
-                                  #0199
-                                </span>
-                              </div>
-                              <div className="relative leading-[160%] font-medium text-greyscale-500 inline-block min-w-[104px] whitespace-nowrap">
-                                Dec 23, 04:00 PM
-                              </div>
-                            </div>
-                          </div>
-                          <b className="relative text-sm leading-[160%] inline-block text-right min-w-[57px] whitespace-nowrap">
-                            $421.00
-                          </b>
-                        </div>
-                        <div className="self-stretch h-px relative box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
-                        <div className="self-stretch flex flex-row items-center justify-between py-[7px] px-0 gap-[20px] z-[1] mq450:flex-wrap">
-                          <div className="flex flex-row items-start justify-start gap-[12px]">
-                            <img
-                              className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
-                              alt=""
-                              src={check}
-                            />
-                            <div className="flex flex-col items-start justify-start gap-[4px]">
-                              <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
-                                <span>{`Payment from `}</span>
-                                <span className="text-primary-600-base">
-                                  #0199
-                                </span>
-                              </div>
-                              <div className="relative leading-[160%] font-medium text-greyscale-500 inline-block min-w-[104px] whitespace-nowrap">
-                                Dec 23, 04:00 PM
+                      {Bill.map(bill => ( 
+                        <div key={bill.billId} className="self-stretch flex flex-col items-start justify-start gap-[7.5px] text-xs">
+                          <div className="self-stretch flex flex-row items-center justify-between py-[7px] px-0 gap-[20px] z-[1] mq450:flex-wrap">
+                            <div className="flex flex-row items-start justify-start gap-[12px]">
+                              <img
+                                className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
+                                alt=""
+                                src={check}
+                              />
+                              <div className="flex flex-col items-start justify-start gap-[4px]">
+                                <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
+                                  <span>{`Payment from `}</span>
+                                  <span className="text-primary-600-base">
+                                    {bill.customerId}
+                                  </span>
+                                </div>
+                                <div className="relative leading-[160%] font-medium text-greyscale-500 inline-block min-w-[104px] whitespace-nowrap">
+                                  {format(bill.saleDate, 'dd-MM-yyyy HH:mm:ss')}
+                                </div>
                               </div>
                             </div>
+                            <b className="relative text-sm leading-[160%] inline-block text-right min-w-[57px] whitespace-nowrap">
+                              ${bill.totalAmount}
+                            </b>
                           </div>
-                          <b className="relative text-sm leading-[160%] inline-block text-right min-w-[57px] whitespace-nowrap">
-                            $421.00
-                          </b>
+                          <div className="self-stretch h-px relative box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
                         </div>
-                        <div className="self-stretch h-px relative box-border z-[1] border-t-[1px] border-solid border-greyscale-100" />
-                        <div className="self-stretch flex flex-row items-center justify-between py-[7px] px-0 gap-[20px] z-[1] mq450:flex-wrap">
-                          <div className="flex flex-row items-start justify-start gap-[12px]">
-                            <img
-                              className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0"
-                              alt=""
-                              src={check}
-                            />
-                            <div className="flex flex-col items-start justify-start gap-[4px]">
-                              <div className="relative leading-[160%] font-semibold inline-block min-w-[122px]">
-                                <span>{`Payment from `}</span>
-                                <span className="text-primary-600-base">
-                                  #0199
-                                </span>
-                              </div>
-                              <div className="relative leading-[160%] font-medium text-greyscale-500 inline-block min-w-[104px] whitespace-nowrap">
-                                Dec 23, 04:00 PM
-                              </div>
-                            </div>
-                          </div>
-                          <b className="relative text-sm leading-[160%] inline-block text-right min-w-[57px] whitespace-nowrap">
-                            $421.00
-                          </b>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>

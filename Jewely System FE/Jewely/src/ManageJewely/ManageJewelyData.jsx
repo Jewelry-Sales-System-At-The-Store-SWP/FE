@@ -61,8 +61,8 @@ const JewelleryDataTable = () => {
 
   useEffect(() => {
     axios
-      // .get("http://localhost:5188/api/Jewelry/GetJewelries")
-      .get("https://666427ef932baf9032aa2d16.mockapi.io/Jewely")
+      .get("http://localhost:5188/api/Jewelry/GetJewelries")
+      // .get("https://666427ef932baf9032aa2d16.mockapi.io/Jewely")
       .then((response) => {
         setJewellery(response.data);
       })
